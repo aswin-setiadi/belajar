@@ -3,6 +3,7 @@ class Solution:
     # 1111112345654321
     count = 0
 
+    # time complexity 2^n
     def longestPalindrome1(self, s: str) -> str:
         def _checkPalindrome1(s: str) -> str:
             Solution.count += 1
@@ -36,17 +37,37 @@ class Solution:
 
         return _checkPalindrome1(s)
 
+    # neetcode answer
     def longestPalindrome2(self, s: str) -> str:
-        if len(s) == 1:
-            return s
-        for i in range(len(s) - 1):
-            pass
+        res = ""
+        resLen = 0
+
+        for i in range(len(s)):
+            # odd length
+            l, r = i, i
+            while l >= 0 and r < len(s) and s[l] == s[r]:
+                if (r - l + 1) > resLen:
+                    res = s[l : r + 1]
+                    resLen = r - l + 1
+                l -= 1
+                r += 1
+
+            # even length
+            l, r = i, i + 1
+            while l >= 0 and r < len(s) and s[l] == s[r]:
+                if (r - l) > resLen:
+                    res = s[l : r + 1]
+                    resLen = r - l + 1
+                l -= 1
+                r += 1
+        Solution.count = resLen
+        return res
 
 
 if __name__ == "__main__":
     ss = ["a", "aa", "aba", "aaba", "abaa", "aaaaabbbddbbb"]
     for s in ss:
         sol = Solution()
-        ans = sol.longestPalindrome1(s)
+        ans = sol.longestPalindrome2(s)
         print(ans)
         print(f"count={sol.count}")
