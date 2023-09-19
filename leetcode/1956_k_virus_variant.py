@@ -12,7 +12,7 @@ class Solution:
 
         for i in range(min_x, max_x + 1):
             for j in range(min_y, max_y + 1):
-                d : List[int] = []
+                d: List[int] = []
                 for p in points:
                     dist = abs(p[0] - i) + abs(p[1] - j)
                     d.append(dist)
