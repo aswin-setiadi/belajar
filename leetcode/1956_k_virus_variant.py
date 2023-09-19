@@ -1,4 +1,3 @@
-from math import ceil
 from typing import List
 
 
@@ -13,7 +12,7 @@ class Solution:
 
         for i in range(min_x, max_x + 1):
             for j in range(min_y, max_y + 1):
-                d = []
+                d : List[int] = []
                 for p in points:
                     dist = abs(p[0] - i) + abs(p[1] - j)
                     d.append(dist)
@@ -27,4 +26,3 @@ if __name__ == "__main__":
     k = 3
     mindays = Solution().minDayskVariants(points, k)
     print(mindays)
-    [1, 2, 3, 4, 5, 6, 7, 8, 9]
