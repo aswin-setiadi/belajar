@@ -2,32 +2,33 @@ import abc
 import functools
 
 
-def num_series(start, stop):
-    l = [*range(start, stop)]
-    total = functools.reduce(lambda a, b: a + b, l)
-    # print(l)
-    return total
+class TwoSigmaInterview:
+    def num_series(self, start: int, stop: int):
+        # * to open the range obj
+        l = [*range(start, stop)]
+        total = functools.reduce(lambda a, b: a + b, l)
+        # print(l)
+        return total
 
-
-def two_sigma_interview():
-    for i in range(14, 28):
-        t1 = num_series(1, i)
-        t2 = num_series(i, 31)
-        t3 = num_series(i + 1, 31)
-        average_payout1 = (i - 1) / 30 * t1
-        average_payout2 = (30 - i + 1) / 30 * t2  # inclusive of i so +1
-        average_payout3 = (30 - i + 1 - 1) / 30 * t3
-        print(
-            f"i={i} {average_payout1:.2f} {average_payout2:.2f} {average_payout3:.2f}"
-        )
+    def main(self):
+        for i in range(14, 28):
+            t1 = self.num_series(1, i)
+            t2 = self.num_series(i, 31)
+            t3 = self.num_series(i + 1, 31)
+            average_payout1 = (i - 1) / 30 * t1
+            average_payout2 = (30 - i + 1) / 30 * t2  # inclusive of i so +1
+            average_payout3 = (30 - i + 1 - 1) / 30 * t3
+            print(
+                f"i={i} {average_payout1:.2f} {average_payout2:.2f} {average_payout3:.2f}"
+            )
 
 
 class InformalParserInterface:
-    def load_data_source(self, path: str, file_name: str) -> str:
+    def load_data_source(self, path: str, file_name: str):
         "load file"
         pass
 
-    def extract_text(self, full_file_name: str) -> dict:
+    def extract_text(self, full_file_name: str):
         "extract text"
         pass
 
@@ -265,4 +266,5 @@ def tutorial_interface():
 
 if __name__ == "__main__":
     # tutorial_interface()
-    tutorial_shape()
+    # tutorial_shape()
+    TwoSigmaInterview().main()
