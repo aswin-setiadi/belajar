@@ -1,6 +1,6 @@
 class Solution:
     @classmethod
-    def array_product(cls, l: list) -> list:
+    def array_product(cls, l: list[int]) -> list[int]:
         n = len(l)
         final_arr = [1] * n
         prefix = 1

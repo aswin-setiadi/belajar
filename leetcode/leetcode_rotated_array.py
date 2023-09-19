@@ -1,10 +1,11 @@
 import math
+from typing import List
 
 
-def search_rotated_sorted_distinct_array(nums: list, target: int) -> int:
+def search_rotated_sorted_distinct_array(nums: List[int], target: int) -> int:
     # sorted means start < pivot < end
     # e.g. 0,1,2,_3,4,5,6 | 1,2,3,_4,5,6,0 | 2,3,4,_5,6,0,1 | 3,4,5,_6,0,1,2 | 4,5,6,_0,1,2,3 | 5,6,0,_1,2,3,4 | 6,0,1,_2,3,4,5
-    def _search(start, end):
+    def _search(start: int, end: int) -> int:
         p = start + math.floor((end - start) / 2)
         # \print(f"s={start} e={end} p={p}")
         # input("pause")
@@ -15,7 +16,7 @@ def search_rotated_sorted_distinct_array(nums: list, target: int) -> int:
         else:
             return _search(p + 1, end)
 
-    def _search_rotated(s, e):
+    def _search_rotated(s: int, e: int) -> int:
         if s == e:
             if nums[s] == target:
                 return s
