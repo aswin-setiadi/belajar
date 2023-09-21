@@ -23,6 +23,7 @@ class TwoSigmaInterview:
             )
 
 
+# https://realpython.com/python-interface/
 class InformalParserInterface:
     def load_data_source(self, path: str, file_name: str):
         "load file"
@@ -241,26 +242,28 @@ def tutorial_shape():
 
 
 def tutorial_interface():
-    # print(issubclass(PdfParser, InformalParserInterface))
-    # print(PdfParser.__mro__)
-    # print(issubclass(EmlParser, InformalParserInterface))
-    # print(EmlParser.__mro__)
+    print(issubclass(PdfParser, InformalParserInterface))
+    print(PdfParser.__mro__)
+    print(issubclass(EmlParser, InformalParserInterface))
+    print(EmlParser.__mro__)
 
-    # print(issubclass(PdfParserNew, UpdatedInformalParserInterface))
-    # print(issubclass(EmlParserNew, UpdatedInformalParserInterface))
-    # print(PdfParserNew.__mro__)
-    # print(EmlParserNew.__mro__)
+    print(issubclass(PdfParserNew, UpdatedInformalParserInterface))
+    print(issubclass(EmlParserNew, UpdatedInformalParserInterface))
+    print(PdfParserNew.__mro__)
+    print(EmlParserNew.__mro__)
 
-    # print(issubclass(Friend, Person)) #True
-    # print(type(Friend))
-    # print(type(Friend()))
-    # print(isinstance(Friend, Person)) #False cause friend is type
-    # print(isinstance(Friend(), Person)) #True cause Friend() is __main__.Friend obj which has required methods for Person (which is a virtual base class)
-    # print(issubclass(PdfParserNew, FormalParserInterface)) #true
-    # print(issubclass(EmlParserNew, FormalParserInterface)) #false
-    # Double.register(float)
-    # print(issubclass(float,Double))
-    # print(isinstance(1.2, Double))
+    print(issubclass(Friend, Person))  # True
+    print(type(Friend))
+    print(type(Friend()))
+    print(isinstance(Friend, Person))  # False cause friend is type
+    print(
+        isinstance(Friend(), Person)
+    )  # True cause Friend() is __main__.Friend obj which has required methods for Person (which is a virtual base class)
+    print(issubclass(PdfParserNew, FormalParserInterface))  # true
+    print(issubclass(EmlParserNew, FormalParserInterface))  # false
+    Double.register(float)
+    print(issubclass(float, Double))
+    print(isinstance(1.2, Double))
     pass
 
 
