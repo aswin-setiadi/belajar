@@ -1,10 +1,14 @@
 # README
 
-## Setup PowerShell
+## Setup PowerShell for venv
 
 Set-ExecutionPolicy Unrestricted -Scope Process
 
 .\venv\Scripts\activate
+
+## Create PS Terminal with Admin Access
+
+Start-Process powershell.exe -Verb runAs
 
 ## Dev Tool Tips
 
