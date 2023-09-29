@@ -2,7 +2,7 @@
 
 # above shebang means use the interpreter /bin/python3 in the path env var
 
-from typing import List
+from typing import List, Tuple
 
 # https://www.youtube.com/watch?v=ubOhA56G_tk 6:21
 
@@ -16,7 +16,7 @@ class Solution:
         pass
 
     @classmethod
-    def solve(cls, arr: List[str]):
+    def solve(cls, arr: List[str]) -> Tuple[int, int]:
         if len(arr) < 3:
             return len(arr), 0
 
@@ -24,7 +24,7 @@ class Solution:
         fruits_count = 1
         fruit_types = [arr[0]]
         start1 = 0
-        start2 = None
+        start2 = 0
 
         for i, v in enumerate(arr[1:], 1):
             fruits_count += 1
