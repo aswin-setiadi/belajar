@@ -1,3 +1,5 @@
+#!/bin/python
+# https://www.youtube.com/watch?v=V8DGdPkBBxg
 from queue import Queue
 
 
@@ -36,14 +38,14 @@ def solve(
     end_unit: str,
     facts: list[tuple[str, float | int, str]],
 ):
+    if start_unit == end_unit:
+        return amt
     name_to_node = parse_facts(facts)
-    if start_unit not in name_to_node or end_unit not in name_to_node:
-        return -1
-    else:
-        visited: list[Node] = []
+    final_amt = -1
+    if start_unit in name_to_node and end_unit in name_to_node:
         search_queue: Queue[tuple[float, Node]] = Queue()
         search_queue.put((amt, name_to_node[start_unit]))
-        final_amt = -1
+        visited: list[Node] = [name_to_node[start_unit]]
         while not search_queue.empty():
             current_amt, current_node = search_queue.get()
             for edge in current_node.edges:
@@ -54,7 +56,7 @@ def solve(
                         break
                     else:
                         search_queue.put((current_amt * edge.multiplier, edge.target))
-        return final_amt
+    return final_amt
 
 
 def testt(l: list[tuple[int]]):
