@@ -64,9 +64,12 @@ def testt(l: list[tuple[int]]):
 if __name__ == "__main__":
     # facts = [("m", 10, "dm"), ("dm", 10, "cm"), ("cm", 10, "mm"), ("m", 1000, "mm")]
     # facts = [("m", 10, "dm"), ("dm", 10, "cm"), ("cm", 10, "mm")]
+    # facts = [("kg", 1000, "g"), ("m", 10, "dm"), ("dm", 10, "cm"), ("cm", 10, "mm")]
     facts = [("kg", 1000, "g"), ("m", 10, "dm"), ("dm", 10, "cm"), ("cm", 10, "mm")]
     # facts = [("m", 1000, "mm")]
     ans = solve(1, "m", "mm", facts)
     print(ans)
-    l = [(1,), (2,)]
-    testt(l)
+    ans = solve(1, "mm", "m", facts)
+    print(ans)
+    # l = [(1,), (2,)]
+    # testt(l)
