@@ -26,6 +26,7 @@ def parse_facts(facts: list[tuple[str, float | int, str]]):
             right_node = Node(right)
             name_to_node[right] = right_node
         name_to_node[left].add_edge(multiplier, name_to_node[right])
+        name_to_node[right].add_edge(1 / multiplier, name_to_node[left])
     return name_to_node
 
 
