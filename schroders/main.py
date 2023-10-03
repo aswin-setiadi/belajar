@@ -19,10 +19,7 @@ class KeyPad:
         Subpath_count will keep track of all the traversed valid 10 key combination given conditions:
         - current vowel count
         - current char (vowel or not)
-        - depth, maximum depth to keep track
-            - if median node degree is 1, max depth-2
-            - else, max depth-1 .
-        Because if many node degree is 1, it will waste space to save valid combination count of depth 9 (some node only 1 check afterwards)
+        - depth
         """
         self.vowels = {"A": None, "E": None, "I": None, "O": None, "U": None}
         self.subpath_accumulator: dict[str, int] = {}
@@ -46,10 +43,7 @@ class KeyPad:
         self.matrix["2"] = ["G", "I", "K", "O"]
         self.matrix["3"] = ["H", "J", "L"]
         self.max_depth = max_depth
-        if 1 == len(min(self.matrix.values(), key=len)):
-            self.max_depth_tracker = self.max_depth - 2
-        else:
-            self.max_depth_tracker = self.max_depth - 1
+        self.max_depth_tracker = self.max_depth - 1
 
         self.combi_count: int = 0
 
