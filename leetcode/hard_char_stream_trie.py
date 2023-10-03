@@ -20,23 +20,16 @@ class StreamChecker:
                 cursor = cursor.char_dict[c]
             cursor.isword = True
 
-    def query(self, letter: str) -> bool:
+    def query(self, letter: str):
         self.prefix += letter
-        index = len(self.prefix) - 1
-        print(self.prefix)
-        # print(index)
-        # print(self.trie.char_dict.keys())
         cursor = self.trie
-        while True:
-            if index >= 0:
-                if self.prefix[index] in cursor.char_dict:
-                    cursor = cursor.char_dict[self.prefix[index]]
-                    if cursor.isword:
-                        print(self.prefix[index:])
-                        return True
-                    index -= 1
-                else:
-                    return False
+        for c in reversed(self.prefix):
+            if c in cursor.char_dict:
+                cursor = cursor.char_dict[c]
+                if cursor.isword:
+                    return True
+            else:
+                return False
 
 
 if __name__ == "__main__":
@@ -57,6 +50,39 @@ if __name__ == "__main__":
         ["j"],
         ["k"],
         ["l"],
+    ]
+    words = ["ab", "ba", "aaab", "abab", "baa"]
+    letters = [
+        ["a"],
+        ["a"],
+        ["a"],
+        ["a"],
+        ["a"],
+        ["b"],
+        ["a"],
+        ["b"],
+        ["a"],
+        ["b"],
+        ["b"],
+        ["b"],
+        ["a"],
+        ["b"],
+        ["a"],
+        ["b"],
+        ["b"],
+        ["b"],
+        ["b"],
+        ["a"],
+        ["b"],
+        ["a"],
+        ["b"],
+        ["a"],
+        ["a"],
+        ["a"],
+        ["b"],
+        ["a"],
+        ["a"],
+        ["a"],
     ]
     sc = StreamChecker(words)
     for l in letters:
