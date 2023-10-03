@@ -7,7 +7,7 @@ from typing import Optional
 from custom_exceptions import InvalidKeyPadLayoutException
 
 DEBUGGING = os.getenv("DEBUGGING")
-if DEBUGGING:
+if DEBUGGING == "1":
     logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 else:
     logging.basicConfig(stream=sys.stdout, level=logging.INFO)
