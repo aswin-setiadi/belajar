@@ -1,8 +1,9 @@
 import logging
 import sys
 import time
+from typing import Optional
 
-
+from custom_exceptions import InvalidKeyPadLayoutException
 from global_vars import DEBUGGING
 
 if DEBUGGING:
@@ -14,34 +15,24 @@ else:
 class Keypad:
     """ """
 
-    def __init__(self, max_depth: int = 10) -> None:
+    def __init__(
+        self, matrix: list[list[str | None]], max_depth: int = 10, max_vowel: int = 2
+    ) -> None:
         """
         Subpath_count will keep track of all the traversed valid 10 key combination given conditions:
         - current vowel count
         - current char (vowel or not)
         - depth
         """
+        if len(matrix) <= 1:
+            raise InvalidKeyPadLayoutException
+        dim = len(matrix) * len(matrix[0])
+        if dim < 6:
+            raise InvalidKeyPadLayoutException
+        self.matrix = self._build_adjacency_list(matrix)
         self.vowels = {"A": None, "E": None, "I": None, "O": None, "U": None}
+        self.max_vowels = max_vowel
         self.subpath_accumulator: dict[str, int] = {}
-        self.matrix: dict[str, list[str]] = {}
-        self.matrix["A"] = ["H", "L"]
-        self.matrix["B"] = ["I", "K", "M"]
-        self.matrix["C"] = ["F", "J", "L", "N"]
-        self.matrix["D"] = ["G", "M", "O"]
-        self.matrix["E"] = ["H", "N"]
-        self.matrix["F"] = ["C", "M", "1"]
-        self.matrix["G"] = ["D", "N", "2"]
-        self.matrix["H"] = ["A", "E", "K", "O", "1", "3"]
-        self.matrix["I"] = ["B", "L", "2"]
-        self.matrix["J"] = ["C", "M", "3"]
-        self.matrix["K"] = ["B", "H", "2"]
-        self.matrix["L"] = ["A", "C", "I", "3"]
-        self.matrix["M"] = ["B", "D", "F", "J"]
-        self.matrix["N"] = ["C", "E", "G", "1"]
-        self.matrix["O"] = ["D", "H", "2"]
-        self.matrix["1"] = ["F", "H", "N"]
-        self.matrix["2"] = ["G", "I", "K", "O"]
-        self.matrix["3"] = ["H", "J", "L"]
         self.max_depth = max_depth
         self.max_depth_tracker = self.max_depth - 1
 
@@ -62,7 +53,6 @@ class Keypad:
 
     def _traverse(self, node: str, depth: int, vowel_count: int) -> int:
         depth += 1
-        # input(f"node={node} cur_seq={cur_seq} #vowel={vowel_count}")
         if depth == self.max_depth:
             return 1
         else:
@@ -73,8 +63,7 @@ class Keypad:
                 subpath_count: int = 0
                 for knight_path in self.matrix[node]:
                     if knight_path in self.vowels:
-                        # print(f"{knight_path} is vowel")
-                        if vowel_count < 2:
+                        if vowel_count < self.max_vowels:
                             subpath_count += self._traverse(
                                 knight_path, depth, vowel_count + 1
                             )
@@ -85,6 +74,55 @@ class Keypad:
                     self.subpath_accumulator[k] = subpath_count
             return subpath_count
 
+    @staticmethod
+    def _build_adjacency_list(
+        m: list[list[str | None]],
+    ) -> dict[str, list[Optional[str]]]:
+        adj_dict: dict[str, list[Optional[str]]] = {}
+        max_row_index = len(m)
+        max_col_index = len(m[0])
+        for row in range(len(m)):
+            for col in range(len(m[row])):
+                key = m[row][col]
+                if key != None:
+                    adj_dict[key] = []
+                    if row >= 2:
+                        if col >= 1:
+                            Keypad._append_target(adj_dict[key], m[row - 2][col - 1])
+                        if col < max_col_index - 1:
+                            Keypad._append_target(adj_dict[key], m[row - 2][col + 1])
+                    if row >= 1:
+                        if col >= 2:
+                            Keypad._append_target(adj_dict[key], m[row - 1][col - 2])
+                        if col < max_col_index - 2:
+                            Keypad._append_target(adj_dict[key], m[row - 1][col + 2])
+                    if row < max_row_index - 2:
+                        if col >= 1:
+                            Keypad._append_target(adj_dict[key], m[row + 2][col - 1])
+                        if col < max_col_index - 1:
+                            Keypad._append_target(adj_dict[key], m[row + 2][col + 1])
+                    if row < max_row_index - 1:
+                        if col >= 2:
+                            Keypad._append_target(adj_dict[key], m[row + 1][col - 2])
+                        if col < max_col_index - 2:
+                            Keypad._append_target(adj_dict[key], m[row + 1][col + 2])
+        return adj_dict
+
+    @staticmethod
+    def _append_target(l: list[Optional[str]], t: str | None):
+        if t != None:
+            l.append(t)
+
+
+def main():
+    matrix = [
+        ["A", "B", "C", "D", "E"],
+        ["F", "G", "H", "I", "J"],
+        ["K", "L", "M", "N", "O"],
+        [None, "1", "2", "3", None],
+    ]
+    Keypad(matrix=matrix, max_depth=10, max_vowel=2).solve()
+
 
 if __name__ == "__main__":
-    Keypad(max_depth=10).solve()
+    main()
