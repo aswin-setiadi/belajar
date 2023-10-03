@@ -1,8 +1,14 @@
+from collections import Counter
 import logging
 import os
 import sys
 
-from custom_exceptions import InvalidKeyPadLayoutException
+from custom_exceptions import (
+    DuplicateKeyException,
+    InvalidKeyPadLayoutException,
+    InvalidMaxDepthException,
+    InvalidMaxVowelException,
+)
 from utils import timer
 
 DEBUGGING = os.getenv("DEBUGGING")
@@ -27,11 +33,6 @@ class Keypad:
         - current char (vowel or not)
         - depth
         """
-        if len(matrix) <= 1:
-            raise InvalidKeyPadLayoutException
-        dim = len(matrix) * len(matrix[0])
-        if dim < 6:
-            raise InvalidKeyPadLayoutException
         self.matrix = self._build_adjacency_list(matrix)
         self.vowels = {"A": None, "E": None, "I": None, "O": None, "U": None}
         self.max_vowels = max_vowel
@@ -152,6 +153,44 @@ class Keypad:
     def _append_target(l: list[str], t: str | None):
         if t != None:
             l.append(t)
+
+
+class Solution:
+    @staticmethod
+    def solve(
+        matrix: list[list[str | None]],
+        max_depth: int,
+        max_vowel: int,
+    ) -> int:
+        if len(matrix) <= 1 or len(matrix[0]) <= 1:
+            raise InvalidKeyPadLayoutException
+        # check all rows have same column length
+        _ = len(matrix[0])
+        for row in matrix[1:]:
+            if len(row) != _:
+                raise InvalidKeyPadLayoutException
+        _ = len(matrix) * len(matrix[0])
+        if _ < 6:
+            raise InvalidKeyPadLayoutException
+
+        tmp_list = [v for sublist in matrix for v in sublist if v is not None]
+        _ = [k for k, v in Counter(tmp_list).items() if v > 1]
+        if _:
+            raise DuplicateKeyException
+
+        if max_depth < 0:
+            raise InvalidMaxDepthException
+        if max_vowel < 0:
+            raise InvalidMaxVowelException
+
+        if DEBUGGING:
+            Keypad(
+                matrix=matrix, max_depth=max_depth, max_vowel=max_vowel
+            ).naive_solve()
+            Keypad(matrix=matrix, max_depth=max_depth, max_vowel=max_vowel).naive_solve(
+                use_depth=True
+            )
+        return Keypad(matrix=matrix, max_depth=max_depth, max_vowel=max_vowel).solve()
 
 
 def main():
