@@ -6,7 +6,7 @@ class KeyPad:
 
     def __init__(self) -> None:
         self.vowels = {"A": None, "E": None, "I": None, "O": None, "U": None}
-        self.results: list[list[str]] = []
+        self.combi_count: int = 0
         self.matrix: dict[str, list[str]] = {}
         self.matrix["A"] = ["H", "L"]
         self.matrix["B"] = ["I", "K", "M"]
@@ -31,27 +31,27 @@ class KeyPad:
         t1 = time.time()
         for key in self.matrix.keys():
             if key in self.vowels:
-                self._traverse(key, [], 1)
+                self._traverse(key, 0, 1)
             else:
-                self._traverse(key, [], 0)
+                self._traverse(key, 0, 0)
         t2 = time.time()
         print(t2 - t1)
-        print(len(self.results))
+        print(self.combi_count)
+        return self.combi_count
 
-    def _traverse(self, node: str, seq: list[str], vowel_count: int):
-        cur_seq: list[str] = seq.copy()
-        cur_seq.append(node)
+    def _traverse(self, node: str, depth: int, vowel_count: int):
+        depth += 1
         # input(f"node={node} cur_seq={cur_seq} #vowel={vowel_count}")
-        if len(cur_seq) == 10:
-            self.results.append(cur_seq)
+        if depth == 10:
+            self.combi_count += 1
         else:
             for knight_path in self.matrix[node]:
                 if knight_path in self.vowels:
                     # print(f"{knight_path} is vowel")
                     if vowel_count < 2:
-                        self._traverse(knight_path, cur_seq, vowel_count + 1)
+                        self._traverse(knight_path, depth, vowel_count + 1)
                 else:
-                    self._traverse(knight_path, cur_seq, vowel_count)
+                    self._traverse(knight_path, depth, vowel_count)
 
 
 if __name__ == "__main__":
