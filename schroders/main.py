@@ -56,7 +56,8 @@ class Keypad:
         if depth == self.max_depth:
             return 1
         else:
-            k = f"{vowel_count}{node}{depth}"
+            # now max vowel can be 2+ digit and node can be 2+ digit, put seperator
+            k = f"{vowel_count}_{node}_{depth}"
             if k in self.subpath_accumulator:
                 return self.subpath_accumulator[k]
             else:
