@@ -50,6 +50,7 @@ class Keypad:
             else:
                 self.combi_count += self._traverse(key, 0, 0)
         logger.info(self.combi_count)
+        return self.combi_count
 
     def _traverse(self, node: str, depth: int, vowel_count: int) -> int:
         depth += 1
