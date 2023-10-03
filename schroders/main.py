@@ -11,7 +11,7 @@ else:
     logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 
 
-class KeyPad:
+class Keypad:
     """ """
 
     def __init__(self, max_depth: int = 10) -> None:
@@ -87,4 +87,4 @@ class KeyPad:
 
 
 if __name__ == "__main__":
-    KeyPad(max_depth=10).solve()
+    Keypad(max_depth=10).solve()

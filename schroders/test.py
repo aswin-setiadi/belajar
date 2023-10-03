@@ -1,10 +1,10 @@
 import unittest
-from main import KeyPad
+from main import Keypad
 
 
-class TestKeyPad(unittest.TestCase):
+class TestKeypad(unittest.TestCase):
     def test_output(self):
-        self.assertEqual(KeyPad().solve(), 1013398)
+        self.assertEqual(Keypad().solve(), 1013398)
 
 
 if __name__ == "__main__":
