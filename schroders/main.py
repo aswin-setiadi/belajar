@@ -12,10 +12,9 @@ if DEBUGGING:
 else:
     logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 
+logger = logging.getLogger(__name__)
 
 class Keypad:
-    """ """
-
     def __init__(
         self,
         matrix: list[list[str | None]],
@@ -50,9 +49,9 @@ class Keypad:
             else:
                 self.combi_count += self._traverse(key, 0, 0)
         t2 = time.time()
-        logging.debug(t2 - t1)
-        logging.debug(len(self.subpath_accumulator))
-        logging.info(self.combi_count)
+        logger.debug(t2 - t1)
+        logger.debug(len(self.subpath_accumulator))
+        logger.info(self.combi_count)
         return self.combi_count
 
     def _traverse(self, node: str, depth: int, vowel_count: int) -> int:
