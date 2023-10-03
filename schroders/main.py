@@ -42,6 +42,7 @@ class Keypad:
         self.max_depth_tracker = self.max_depth - 1
 
         self.combi_count: int = 0
+        self.naive_results: list[list[str]] = []
 
     @timer
     def solve(self):
@@ -51,7 +52,6 @@ class Keypad:
             else:
                 self.combi_count += self._traverse(key, 0, 0)
         logger.info(self.combi_count)
-        return self.combi_count
 
     def _traverse(self, node: str, depth: int, vowel_count: int) -> int:
         depth += 1
@@ -75,6 +75,44 @@ class Keypad:
                 if 2 <= depth and depth <= self.max_depth_tracker:
                     self.subpath_accumulator[k] = subpath_count
             return subpath_count
+
+    @timer
+    def naive_solve(self, use_depth: bool = False):
+        if use_depth:
+            arg1 = 0
+        else:
+            arg1 = []
+        for key in self.matrix.keys():
+            if key in self.vowels:
+                self.naive_traverse(key, arg1, 1)
+            else:
+                self.naive_traverse(key, arg1, 0)
+        logger.info(len(self.naive_results))
+
+    def naive_traverse(self, node: str, seq: int | list[str], vowel_count: int):
+        if isinstance(seq, int):
+            seq += 1
+            if seq == 10:
+                self.combi_count += 1
+            else:
+                for knight_path in self.matrix[node]:
+                    if knight_path in self.vowels:
+                        if vowel_count < 2:
+                            self.naive_traverse(knight_path, seq, vowel_count + 1)
+                    else:
+                        self.naive_traverse(knight_path, seq, vowel_count)
+        else:
+            cur_seq: list[str] = seq.copy()
+            cur_seq.append(node)
+            if len(cur_seq) == 10:
+                self.naive_results.append(cur_seq)
+            else:
+                for knight_path in self.matrix[node]:
+                    if knight_path in self.vowels:
+                        if vowel_count < 2:
+                            self.naive_traverse(knight_path, cur_seq, vowel_count + 1)
+                    else:
+                        self.naive_traverse(knight_path, cur_seq, vowel_count)
 
     @staticmethod
     def _build_adjacency_list(
@@ -124,6 +162,8 @@ def main():
         [None, "1", "2", "3", None],
     ]
     Keypad(matrix=matrix, max_depth=10, max_vowel=2).solve()
+    Keypad(matrix=matrix, max_depth=10, max_vowel=2).naive_solve()
+    Keypad(matrix=matrix, max_depth=10, max_vowel=2).naive_solve(use_depth=True)
 
 
 if __name__ == "__main__":
