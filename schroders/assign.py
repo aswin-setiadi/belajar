@@ -1,4 +1,14 @@
+import logging
+import sys
 import time
+
+
+from global_vars import DEBUGGING
+
+if DEBUGGING:
+    logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
+else:
+    logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 
 
 class KeyPad:
@@ -35,8 +45,8 @@ class KeyPad:
             else:
                 self._traverse(key, 0, 0)
         t2 = time.time()
-        print(t2 - t1)
-        print(self.combi_count)
+        logging.debug(t2 - t1)
+        logging.info(self.combi_count)
         return self.combi_count
 
     def _traverse(self, node: str, depth: int, vowel_count: int):
