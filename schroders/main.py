@@ -1,11 +1,12 @@
 import logging
+import os
 import sys
 import time
 from typing import Optional
 
 from custom_exceptions import InvalidKeyPadLayoutException
-from global_vars import DEBUGGING
 
+DEBUGGING = os.getenv("DEBUGGING")
 if DEBUGGING:
     logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 else:
