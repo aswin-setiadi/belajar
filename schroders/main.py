@@ -5,6 +5,7 @@ import time
 from typing import Optional
 
 from custom_exceptions import InvalidKeyPadLayoutException
+from utils import timer
 
 DEBUGGING = os.getenv("DEBUGGING")
 if DEBUGGING == "1":
@@ -13,6 +14,7 @@ else:
     logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 
 logger = logging.getLogger(__name__)
+
 
 class Keypad:
     def __init__(
@@ -41,16 +43,13 @@ class Keypad:
 
         self.combi_count: int = 0
 
+    @timer
     def solve(self):
-        t1 = time.time()
         for key in self.matrix.keys():
             if key in self.vowels:
                 self.combi_count += self._traverse(key, 0, 1)
             else:
                 self.combi_count += self._traverse(key, 0, 0)
-        t2 = time.time()
-        logger.debug(t2 - t1)
-        logger.debug(len(self.subpath_accumulator))
         logger.info(self.combi_count)
         return self.combi_count
 
