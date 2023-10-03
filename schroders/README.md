@@ -8,7 +8,7 @@
 
 ## Discussion
 
-There are a potentially maximum 8 candidates of knight move from each cell. We first build adjacency list for all the keys based on those 8 moves. At first I tried with naive dfs. The code will loop each key and traverse down until node depth of 10. Each traversal will track the node depth in a variable. If current node is a vowel, the ```vowel_count``` will keep track so it will avoid traversing down once maximum vowel allowed reached. If the recursion reach node depth of 10, it will add to total valid 10 key sequence variable traversed so far. 
+There are a potentially maximum 8 candidates of knight move from each cell. We first build adjacency list for all the keys based on those 8 moves. At first I tried with naive dfs. The code will loop each key and traverse down until node depth of 10. Each traversal will track the node depth in a variable. If current node is a vowel, the ```vowel_count``` will keep track so it will avoid traversing down through another vowel once maximum vowel allowed reached. If the recursion reach node depth of 10, it will add to total valid 10 key sequence variable traversed so far. 
 
 In first iteration, the program will traverse down the tree finding valid 10 key sequences, and append the 10 key sequence string to instance ```naive_results``` list. Each recursion keeps track of the current node traversed sequence and it has to copy current node seq list before passing it down as they are mutable. This significantly grow memory usage in the scenario the requested **key sequences length** increases. The program then return length of ```naive_results``` as the total number of valid 10 key sequences.
 
