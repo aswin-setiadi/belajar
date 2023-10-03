@@ -29,3 +29,9 @@ Using time.perf_counter()
 - naive dfs= 3.387205 ms
 - replace seq ```list[str]``` to depth ```int```= 1.746320 ms
 - use memoization to keep track of traversed path= 0.002575 ms
+
+## Repository
+
+Link: https://github.com/aswin-setiadi/belajar/tree/master
+
+Folder: schroders
