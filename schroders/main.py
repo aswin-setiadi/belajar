@@ -16,7 +16,10 @@ class Keypad:
     """ """
 
     def __init__(
-        self, matrix: list[list[str | None]], max_depth: int = 10, max_vowel: int = 2
+        self,
+        matrix: list[list[str | None]],
+        max_depth: int,
+        max_vowel: int,
     ) -> None:
         """
         Subpath_count will keep track of all the traversed valid 10 key combination given conditions:
@@ -77,7 +80,7 @@ class Keypad:
     @staticmethod
     def _build_adjacency_list(
         m: list[list[str | None]],
-    ) -> dict[str, list[Optional[str]]]:
+    ) -> dict[str, list[str]]:
         adj_dict: dict[str, list[Optional[str]]] = {}
         max_row_index = len(m)
         max_col_index = len(m[0])
@@ -115,7 +118,7 @@ class Keypad:
 
 
 def main():
-    matrix = [
+    matrix: list[list[str | None]] = [
         ["A", "B", "C", "D", "E"],
         ["F", "G", "H", "I", "J"],
         ["K", "L", "M", "N", "O"],
