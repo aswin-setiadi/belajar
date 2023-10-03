@@ -4,7 +4,7 @@
 
 1. In terminal, go to schroders directory 
 2. Run ```$python main.py```
-3. For testing, run ```$python schroders/test.py```
+3. For testing, run ```$python test.py```
 
 ## Discussion
 
