@@ -116,7 +116,7 @@ class Keypad:
     def _build_adjacency_list(
         m: list[list[str | None]],
     ) -> dict[str, list[str]]:
-        adj_dict: dict[str, list[Optional[str]]] = {}
+        adj_dict: dict[str, list[str]] = {}
         max_row_index = len(m)
         max_col_index = len(m[0])
         for row in range(len(m)):
@@ -147,7 +147,7 @@ class Keypad:
         return adj_dict
 
     @staticmethod
-    def _append_target(l: list[Optional[str]], t: str | None):
+    def _append_target(l: list[str], t: str | None):
         if t != None:
             l.append(t)
 
