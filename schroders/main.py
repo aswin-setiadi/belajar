@@ -201,8 +201,6 @@ def main():
         [None, "1", "2", "3", None],
     ]
     Keypad(matrix=matrix, max_depth=10, max_vowel=2).solve()
-    Keypad(matrix=matrix, max_depth=10, max_vowel=2).naive_solve()
-    Keypad(matrix=matrix, max_depth=10, max_vowel=2).naive_solve(use_depth=True)
 
 
 if __name__ == "__main__":
