@@ -81,7 +81,7 @@ class KeyPad:
 
                     else:
                         subpath_count += self._traverse(knight_path, depth, vowel_count)
-                if depth <= self.max_depth_tracker:
+                if 2 <= depth and self.max_depth_tracker >= depth:
                     self.subpath_accumulator[k] = subpath_count
             return subpath_count
 
