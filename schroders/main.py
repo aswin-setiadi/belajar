@@ -14,9 +14,18 @@ else:
 class KeyPad:
     """ """
 
-    def __init__(self) -> None:
+    def __init__(self, max_depth: int = 10) -> None:
+        """
+        Subpath_count will keep track of all the traversed valid 10 key combination given conditions:
+        - current vowel count
+        - current char (vowel or not)
+        - depth, maximum depth to keep track
+            - if median node degree is 1, max depth-2
+            - else, max depth-1 .
+        Because if many node degree is 1, it will waste space to save valid combination count of depth 9 (some node only 1 check afterwards)
+        """
         self.vowels = {"A": None, "E": None, "I": None, "O": None, "U": None}
-        self.combi_count: int = 0
+        self.subpath_accumulator: dict[str, int] = {}
         self.matrix: dict[str, list[str]] = {}
         self.matrix["A"] = ["H", "L"]
         self.matrix["B"] = ["I", "K", "M"]
@@ -36,33 +45,52 @@ class KeyPad:
         self.matrix["1"] = ["F", "H", "N"]
         self.matrix["2"] = ["G", "I", "K", "O"]
         self.matrix["3"] = ["H", "J", "L"]
+        self.max_depth = max_depth
+        if 1 == len(min(self.matrix.values(), key=len)):
+            self.max_depth_tracker = self.max_depth - 2
+        else:
+            self.max_depth_tracker = self.max_depth - 1
+
+        self.combi_count: int = 0
 
     def solve(self):
         t1 = time.time()
         for key in self.matrix.keys():
             if key in self.vowels:
-                self._traverse(key, 0, 1)
+                self.combi_count += self._traverse(key, 0, 1)
             else:
-                self._traverse(key, 0, 0)
+                self.combi_count += self._traverse(key, 0, 0)
         t2 = time.time()
         logging.debug(t2 - t1)
+        logging.debug(len(self.subpath_accumulator))
         logging.info(self.combi_count)
         return self.combi_count
 
-    def _traverse(self, node: str, depth: int, vowel_count: int):
+    def _traverse(self, node: str, depth: int, vowel_count: int) -> int:
         depth += 1
         # input(f"node={node} cur_seq={cur_seq} #vowel={vowel_count}")
-        if depth == 10:
-            self.combi_count += 1
+        if depth == self.max_depth:
+            return 1
         else:
-            for knight_path in self.matrix[node]:
-                if knight_path in self.vowels:
-                    # print(f"{knight_path} is vowel")
-                    if vowel_count < 2:
-                        self._traverse(knight_path, depth, vowel_count + 1)
-                else:
-                    self._traverse(knight_path, depth, vowel_count)
+            k = f"{vowel_count}{node}{depth}"
+            if k in self.subpath_accumulator:
+                return self.subpath_accumulator[k]
+            else:
+                subpath_count: int = 0
+                for knight_path in self.matrix[node]:
+                    if knight_path in self.vowels:
+                        # print(f"{knight_path} is vowel")
+                        if vowel_count < 2:
+                            subpath_count += self._traverse(
+                                knight_path, depth, vowel_count + 1
+                            )
+
+                    else:
+                        subpath_count += self._traverse(knight_path, depth, vowel_count)
+                if depth <= self.max_depth_tracker:
+                    self.subpath_accumulator[k] = subpath_count
+            return subpath_count
 
 
 if __name__ == "__main__":
-    KeyPad().solve()
+    KeyPad(max_depth=10).solve()
