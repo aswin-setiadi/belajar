@@ -1,6 +1,7 @@
 from collections import defaultdict
 
 
+# neetcode answer
 class TrieNode:
     def __init__(self) -> None:
         self.char_dict: dict[str, TrieNode] = defaultdict(TrieNode)
