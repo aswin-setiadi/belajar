@@ -28,9 +28,9 @@ class Keypad:
         max_vowel: int,
     ) -> None:
         """
-        Subpath_count will keep track of all the traversed valid 10 key combination given conditions:
+        Subpath_accumulator will keep track of all the traversed valid 10 key combination given conditions:
         - current vowel count
-        - current char (vowel or not)
+        - current char/ location the subpath starts
         - depth
         """
         self.matrix = self._build_adjacency_list(matrix)
@@ -39,7 +39,6 @@ class Keypad:
         self.subpath_accumulator: dict[str, int] = {}
         self.max_depth = max_depth
         self.max_depth_tracker = self.max_depth - 1
-
         self.combi_count: int = 0
         self.naive_results: list[list[str]] = []
 
