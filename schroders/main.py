@@ -200,7 +200,7 @@ def main():
         ["K", "L", "M", "N", "O"],
         [None, "1", "2", "3", None],
     ]
-    Keypad(matrix=matrix, max_depth=10, max_vowel=2).solve()
+    Solution.solve(matrix=matrix, max_depth=10, max_vowel=2)
 
 
 if __name__ == "__main__":
