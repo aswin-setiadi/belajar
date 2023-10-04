@@ -14,7 +14,7 @@ In first iteration, the program will traverse down the tree finding valid 10 key
 
 First improvement, I changed the ```seq``` parameter to ```int``` so every down traversal just +1 instead of list copy and appending node key to the list, improving memory usage.
 
-Second improvement, I applied **memoization** by tracking the total downstream valid 10 key sequences given current node conditions. The tracker marks the current node conditions as ```{vowel_count}_{node}_{depth}``` where ```vowel_count``` is the current node total traversed vowels, ```node``` is the current node key, and ```depth``` is the current node depth in the current traversal. These 3 conditions combination affect the total outcome of the downstream valid 10 key sequences. By tracking and pruning the already visited traversal from the recursions, the program is able to run significantly faster. The recursion will accumulate the total traversed valid 10 key sequences and then log it on a single line to standard out.
+Second improvement, I applied **memoization** by tracking the total downstream valid 10 key sequences given current node conditions. The tracker marks the current node conditions as ```{vowel_count}_{node}_{depth}``` where ```vowel_count``` is the current node total traversed vowels, ```node``` is the current node key, and ```depth``` is the current node depth in the current traversal. These 3 conditions combination affect the total outcome of the downstream valid 10 key sequences. By tracking and pruning the already visited traversal from the recursions, the program is able to run significantly faster. The recursion will accumulate the total traversed valid 10 key sequences in ```combi_count``` and then log it on a single line to standard out.
 
 ## Runtime
 
