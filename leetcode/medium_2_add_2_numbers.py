@@ -65,7 +65,7 @@ class Solution2:
         carry = 0
         dummy_head = ListNode()
         ans_cursor = dummy_head
-        while cursor1 or cursor2 or carry is not 0:
+        while cursor1 or cursor2 or carry != 0:
             if cursor1 is None:
                 v1 = 0
             else:
