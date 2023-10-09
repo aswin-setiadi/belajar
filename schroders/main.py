@@ -284,7 +284,7 @@ def main():
         [None, "1", "2", "3", None],
     ]
     moves = ["knight", "rook", "bishop"]
-    for move in moves:
+    for move in moves[:1]:
         Solution.solve(matrix=matrix, max_depth=10, max_vowel=2, move_type=move)
 
 
