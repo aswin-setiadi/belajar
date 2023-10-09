@@ -5,7 +5,7 @@ import time
 logger = logging.getLogger(__name__)
 
 
-def timer(func):
+def timer(func: callable) -> callable:
     @functools.wraps(func)
     def wrapper_timer(*args, **kwargs):
         start = time.perf_counter()
