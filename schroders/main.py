@@ -135,7 +135,7 @@ class Builder:
             for row in range(len(m)):
                 for col in range(len(m[row])):
                     key = m[row][col]
-                    if key != None:
+                    if key is not None:
                         if row >= 2:
                             if col >= 1:
                                 Builder._append_target(
@@ -177,9 +177,7 @@ class Builder:
             for row in range(len(m)):
                 for col in range(len(m[row])):
                     key = m[row][col]
-                    if key is None:
-                        continue
-                    else:
+                    if key is not None:
                         possible_horizontal = m[row]
                         possible_vertical = [v[col] for v in m]
                         for cell in possible_horizontal:
@@ -193,9 +191,7 @@ class Builder:
             for row in range(len(m)):
                 for col in range(len(m[row])):
                     key = m[row][col]
-                    if key is None:
-                        continue
-                    else:
+                    if key is not None:
                         for row2 in range(len(m)):
                             if row2 != row:
                                 col_diff = abs(row2 - row)
