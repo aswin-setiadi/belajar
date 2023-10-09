@@ -223,9 +223,7 @@ class Builder:
 class Solution:
     @staticmethod
     def solve(
-        matrix: list[list[str | None]],
-        max_depth: int,
-        max_vowel: int,
+        matrix: list[list[str | None]], max_depth: int, max_vowel: int, move_type: str
     ) -> int:
         if len(matrix) <= 1 or len(matrix[0]) <= 1:
             raise InvalidKeyPadLayoutException
@@ -238,8 +236,10 @@ class Solution:
         if _ < 6:
             raise InvalidKeyPadLayoutException
 
-        tmp_list = [v for sublist in matrix for v in sublist if v is not None]
-        _ = [k for k, v in Counter(tmp_list).items() if v > 1]
+        # check for key duplicates
+        total_keys = [v for sublist in matrix for v in sublist if v is not None]
+        # k is key, v is key count
+        _ = [k for k, v in Counter(total_keys).items() if v > 1]
         if _:
             raise DuplicateKeyException
 
@@ -248,14 +248,35 @@ class Solution:
         if max_vowel < 0:
             raise InvalidMaxVowelException
 
+        adj_dict = Builder.build_adjacency_list(matrix, move_type)
+        total_branches = 0
+        for ls in adj_dict.values():
+            total_branches += len(ls)
+        avg_branches = total_branches / len(adj_dict)
         if DEBUGGING:
-            Keypad(
-                matrix=matrix, max_depth=max_depth, max_vowel=max_vowel
-            ).naive_solve()
-            Keypad(matrix=matrix, max_depth=max_depth, max_vowel=max_vowel).naive_solve(
-                use_depth=True
+            logger.debug(
+                f"solving {move_type} move with {max_depth} max depth and {max_vowel} max vowel "
+                f"with {len(adj_dict)} keys and {avg_branches:.2f} avg branches \n"
+                f"{len(adj_dict)}*{avg_branches:.2f}^{max_depth}= {len(adj_dict)*avg_branches**max_depth:,.2f}"
             )
-        return Keypad(matrix=matrix, max_depth=max_depth, max_vowel=max_vowel).solve()
+        if DEBUGGING:
+            # Keypad(
+            #     matrix=matrix,
+            #     max_depth=max_depth,
+            #     max_vowel=max_vowel,
+            #     move_type=move_type,
+            # ).naive_solve() around 5 minute for rook
+            # Keypad(
+            #     adj_list=adj_list,
+            #     max_depth=max_depth,
+            #     max_vowel=max_vowel,
+            # ).naive_solve(use_depth=True)
+            pass
+        return Keypad(
+            adj_dict=adj_dict,
+            max_depth=max_depth,
+            max_vowel=max_vowel,
+        ).solve()
 
 
 def main():
@@ -265,7 +286,9 @@ def main():
         ["K", "L", "M", "N", "O"],
         [None, "1", "2", "3", None],
     ]
-    Solution.solve(matrix=matrix, max_depth=10, max_vowel=2)
+    moves = ["knight", "rook", "bishop"]
+    for move in moves:
+        Solution.solve(matrix=matrix, max_depth=10, max_vowel=2, move_type=move)
 
 
 if __name__ == "__main__":
