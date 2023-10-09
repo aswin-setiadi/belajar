@@ -1,6 +1,6 @@
 class Solution:
     # 46.41% 83.84%
-    def _get_neigbour_land(self, r: int, c: int) -> list[tuple[int, int]]:
+    def _get_neighbors(self, r: int, c: int) -> list[tuple[int, int]]:
         ns: list[tuple[int, int]] = []
         if r >= 1:
             new_r1 = r - 1
@@ -20,7 +20,7 @@ class Solution:
         if self.visited[r][c] is False:
             self.visited[r][c] = True
             if self.matrix[r][c] == "1":
-                ns = self._get_neigbour_land(r, c)
+                ns = self._get_neighbors(r, c)
                 for n in ns:
                     self._explore_lands(n[0], n[1])
 
@@ -35,10 +35,11 @@ class Solution:
         for i in range(len(self.matrix)):
             for j in range(len(self.matrix[i])):
                 if self.visited[i][j] == False:
+                    # must mark visit here cause water will not explore
                     self.visited[i][j] = True
                     if self.matrix[i][j] == "1":
                         self.total_land += 1
-                        ns = self._get_neigbour_land(i, j)
+                        ns = self._get_neighbors(i, j)
                         for n in ns:
                             self._explore_lands(n[0], n[1])
 
