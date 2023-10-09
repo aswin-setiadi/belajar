@@ -22,10 +22,7 @@ logger = logging.getLogger(__name__)
 
 class Keypad:
     def __init__(
-        self,
-        matrix: list[list[str | None]],
-        max_depth: int,
-        max_vowel: int,
+        self, adj_dict: dict[str, list[str]], max_depth: int, max_vowel: int
     ) -> None:
         """
         Subpath_accumulator will keep track of all the traversed valid 10 key combination given conditions:
@@ -33,7 +30,7 @@ class Keypad:
         - current char/ location the subpath starts
         - depth
         """
-        self.matrix = self._build_adjacency_list(matrix)
+        self.adj_dict = adj_dict
         self.vowels = {"A": None, "E": None, "I": None, "O": None, "U": None}
         self.max_vowels = max_vowel
         self.subpath_accumulator: dict[str, int] = {}
@@ -44,12 +41,12 @@ class Keypad:
 
     @timer
     def solve(self):
-        for key in self.matrix.keys():
+        for key in self.adj_dict.keys():
             if key in self.vowels:
                 self.combi_count += self._traverse(key, 0, 1)
             else:
                 self.combi_count += self._traverse(key, 0, 0)
-        logger.info(self.combi_count)
+        logger.info(f"{self.combi_count:,}")
         return self.combi_count
 
     def _traverse(self, node: str, depth: int, vowel_count: int) -> int:
@@ -63,7 +60,7 @@ class Keypad:
                 return self.subpath_accumulator[k]
             else:
                 subpath_count: int = 0
-                for knight_path in self.matrix[node]:
+                for knight_path in self.adj_dict[node]:
                     if knight_path in self.vowels:
                         if vowel_count < self.max_vowels:
                             subpath_count += self._traverse(
@@ -78,74 +75,142 @@ class Keypad:
 
     @timer
     def naive_solve(self, use_depth: bool = False):
+        for key in self.adj_dict.keys():
+            key_count = 1 if key in self.vowels else 0
+            if use_depth:
+                self.naive_traverse_use_depth(key, 0, key_count)
+            else:
+                self.naive_traverse(key, [], key_count)
+
         if use_depth:
-            arg1 = 0
+            logger.info(f"{self.combi_count:,}")
         else:
-            arg1 = []
-        for key in self.matrix.keys():
-            if key in self.vowels:
-                self.naive_traverse(key, arg1, 1)
-            else:
-                self.naive_traverse(key, arg1, 0)
-        logger.info(len(self.naive_results))
+            logger.info(f"{len(self.naive_results):,}")
 
-    def naive_traverse(self, node: str, seq: int | list[str], vowel_count: int):
-        if isinstance(seq, int):
-            seq += 1
-            if seq == 10:
-                self.combi_count += 1
-            else:
-                for knight_path in self.matrix[node]:
-                    if knight_path in self.vowels:
-                        if vowel_count < 2:
-                            self.naive_traverse(knight_path, seq, vowel_count + 1)
-                    else:
-                        self.naive_traverse(knight_path, seq, vowel_count)
+    def naive_traverse(self, node: str, seq: list[str], vowel_count: int):
+        cur_seq: list[str] = seq.copy()
+        cur_seq.append(node)
+        if len(cur_seq) == self.max_depth:
+            self.naive_results.append(cur_seq)
         else:
-            cur_seq: list[str] = seq.copy()
-            cur_seq.append(node)
-            if len(cur_seq) == 10:
-                self.naive_results.append(cur_seq)
-            else:
-                for knight_path in self.matrix[node]:
-                    if knight_path in self.vowels:
-                        if vowel_count < 2:
-                            self.naive_traverse(knight_path, cur_seq, vowel_count + 1)
-                    else:
-                        self.naive_traverse(knight_path, cur_seq, vowel_count)
+            for knight_path in self.adj_dict[node]:
+                if knight_path in self.vowels:
+                    if vowel_count < 2:
+                        self.naive_traverse(knight_path, cur_seq, vowel_count + 1)
+                else:
+                    self.naive_traverse(knight_path, cur_seq, vowel_count)
 
-    @staticmethod
-    def _build_adjacency_list(
-        m: list[list[str | None]],
+    def naive_traverse_use_depth(self, node: str, cur_depth: int, vowel_count: int):
+        cur_depth += 1
+        if cur_depth == self.max_depth:
+            self.combi_count += 1
+        else:
+            for knight_path in self.adj_dict[node]:
+                if knight_path in self.vowels:
+                    if vowel_count < 2:
+                        self.naive_traverse_use_depth(
+                            knight_path, cur_depth, vowel_count + 1
+                        )
+                else:
+                    self.naive_traverse_use_depth(knight_path, cur_depth, vowel_count)
+
+
+class Builder:
+    move_type = VALID_PIECES
+
+    @classmethod
+    def build_adjacency_list(
+        cls, m: list[list[str | None]], piece_name: str
     ) -> dict[str, list[str]]:
+        if piece_name not in Builder.move_type:
+            raise Exception
+
         adj_dict: dict[str, list[str]] = {}
         max_row_index = len(m)
         max_col_index = len(m[0])
-        for row in range(len(m)):
-            for col in range(len(m[row])):
-                key = m[row][col]
-                if key != None:
-                    adj_dict[key] = []
-                    if row >= 2:
-                        if col >= 1:
-                            Keypad._append_target(adj_dict[key], m[row - 2][col - 1])
-                        if col < max_col_index - 1:
-                            Keypad._append_target(adj_dict[key], m[row - 2][col + 1])
-                    if row >= 1:
-                        if col >= 2:
-                            Keypad._append_target(adj_dict[key], m[row - 1][col - 2])
-                        if col < max_col_index - 2:
-                            Keypad._append_target(adj_dict[key], m[row - 1][col + 2])
-                    if row < max_row_index - 2:
-                        if col >= 1:
-                            Keypad._append_target(adj_dict[key], m[row + 2][col - 1])
-                        if col < max_col_index - 1:
-                            Keypad._append_target(adj_dict[key], m[row + 2][col + 1])
-                    if row < max_row_index - 1:
-                        if col >= 2:
-                            Keypad._append_target(adj_dict[key], m[row + 1][col - 2])
-                        if col < max_col_index - 2:
-                            Keypad._append_target(adj_dict[key], m[row + 1][col + 2])
+        if piece_name == VALID_PIECES[0]:
+            for row in range(len(m)):
+                for col in range(len(m[row])):
+                    key = m[row][col]
+                    if key != None:
+                        adj_dict[key] = []
+                        if row >= 2:
+                            if col >= 1:
+                                Builder._append_target(
+                                    adj_dict[key], m[row - 2][col - 1]
+                                )
+                            if col < max_col_index - 1:
+                                Builder._append_target(
+                                    adj_dict[key], m[row - 2][col + 1]
+                                )
+                        if row >= 1:
+                            if col >= 2:
+                                Builder._append_target(
+                                    adj_dict[key], m[row - 1][col - 2]
+                                )
+                            if col < max_col_index - 2:
+                                Builder._append_target(
+                                    adj_dict[key], m[row - 1][col + 2]
+                                )
+                        if row < max_row_index - 2:
+                            if col >= 1:
+                                Builder._append_target(
+                                    adj_dict[key], m[row + 2][col - 1]
+                                )
+                            if col < max_col_index - 1:
+                                Builder._append_target(
+                                    adj_dict[key], m[row + 2][col + 1]
+                                )
+                        if row < max_row_index - 1:
+                            if col >= 2:
+                                Builder._append_target(
+                                    adj_dict[key], m[row + 1][col - 2]
+                                )
+                            if col < max_col_index - 2:
+                                Builder._append_target(
+                                    adj_dict[key], m[row + 1][col + 2]
+                                )
+
+        if piece_name == VALID_PIECES[1]:
+            for row in range(len(m)):
+                for col in range(len(m[row])):
+                    key = m[row][col]
+                    if key is None:
+                        continue
+                    else:
+                        if key not in adj_dict:
+                            adj_dict[key] = []
+                        possible_horizontal = m[row]
+                        possible_vertical = [v[col] for v in m]
+                        for cell in possible_horizontal:
+                            if cell != key and cell is not None:
+                                adj_dict[key].append(cell)
+                        for cell in possible_vertical:
+                            if cell != key and cell is not None:
+                                adj_dict[key].append(cell)
+
+        if piece_name == VALID_PIECES[2]:
+            for row in range(len(m)):
+                for col in range(len(m[row])):
+                    key = m[row][col]
+                    if key is None:
+                        continue
+                    else:
+                        if key not in adj_dict:
+                            adj_dict[key] = []
+                        for row2 in range(len(m)):
+                            if row2 != row:
+                                col_diff = abs(row2 - row)
+                                new_col = col - col_diff
+                                new_col2 = col + col_diff
+                                if new_col >= 0:
+                                    target = m[row2][new_col]
+                                    if target is not None:
+                                        adj_dict[key].append(target)
+                                if new_col2 < max_col_index:
+                                    target = m[row2][new_col2]
+                                    if target is not None:
+                                        adj_dict[key].append(target)
         return adj_dict
 
     @staticmethod
