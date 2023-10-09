@@ -120,13 +120,15 @@ class Builder:
     move_type = VALID_PIECES
 
     @classmethod
-    def build_adjacency_list(
+    def build_adjacency_dict(
         cls, m: list[list[str | None]], piece_name: str
     ) -> dict[str, list[str]]:
         if piece_name not in Builder.move_type:
             raise Exception
 
-        adj_dict: dict[str, list[str]] = {}
+        adj_dict: dict[str, list[str]] = {
+            k: [] for row in m for k in row if k is not None
+        }
         max_row_index = len(m)
         max_col_index = len(m[0])
         if piece_name == VALID_PIECES[0]:
@@ -134,7 +136,6 @@ class Builder:
                 for col in range(len(m[row])):
                     key = m[row][col]
                     if key != None:
-                        adj_dict[key] = []
                         if row >= 2:
                             if col >= 1:
                                 Builder._append_target(
@@ -179,8 +180,6 @@ class Builder:
                     if key is None:
                         continue
                     else:
-                        if key not in adj_dict:
-                            adj_dict[key] = []
                         possible_horizontal = m[row]
                         possible_vertical = [v[col] for v in m]
                         for cell in possible_horizontal:
@@ -197,8 +196,6 @@ class Builder:
                     if key is None:
                         continue
                     else:
-                        if key not in adj_dict:
-                            adj_dict[key] = []
                         for row2 in range(len(m)):
                             if row2 != row:
                                 col_diff = abs(row2 - row)
@@ -248,7 +245,7 @@ class Solution:
         if max_vowel < 0:
             raise InvalidMaxVowelException
 
-        adj_dict = Builder.build_adjacency_list(matrix, move_type)
+        adj_dict = Builder.build_adjacency_dict(matrix, move_type)
         total_branches = 0
         for ls in adj_dict.values():
             total_branches += len(ls)
