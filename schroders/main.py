@@ -9,6 +9,7 @@ from custom_exceptions import (
     InvalidMaxDepthException,
     InvalidMaxVowelException,
 )
+from global_vars import VALID_PIECES
 from utils import timer
 
 DEBUGGING = os.getenv("DEBUGGING")
