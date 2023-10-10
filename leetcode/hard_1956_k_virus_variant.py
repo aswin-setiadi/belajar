@@ -24,5 +24,6 @@ class Solution:
 if __name__ == "__main__":
     points = [[3, 3], [1, 2], [9, 2]]
     k = 3
+    # solution means find any point earliest have 3 virus
     mindays = Solution().minDayskVariants(points, k)
     print(mindays)
