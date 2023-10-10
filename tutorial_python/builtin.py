@@ -18,13 +18,15 @@ def main():
     print(reduce(lambda x, y: x + y, fruits))
 
 
-q: deque[str] = deque()
+q: deque[str] = deque([1, 2, 3, 4], 3)
 q.append("a")
 q.append("b")
 q.append("c")
 q.pop()
 q.popleft()
 print(q.appendleft("a"))
+if q:
+    print("q not empty")
 
 # for stack can use list append and pop, deque is faster than list cause:
 # when python need to reallocate memory to grow underlying list, the operation are slower and can become O(n)
