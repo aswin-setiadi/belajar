@@ -37,7 +37,7 @@ class BankAccount:
         traverse the t_history from left-> right
         dict key= dt, value= final balance at that dt
         list element= epoch (sorted because we only append)
-        when retieving bal at epoch x
+        when retrieving bal at epoch x
         8am, 9am
         8.30 ->  of this as key to search in dict
         for naive approach:
