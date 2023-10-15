@@ -9,15 +9,12 @@ class Solution:
         0^0-n= 1
         0^-n not possible
         68.12% 55.84%
+        removing n==0 check (-1^0 is still 1), speed+memory become 40.17% 85.53%
         """
 
         if x == 0:
             return 0
-        if n == 0:
-            if x > 0:
-                return 1
-            else:
-                return -1
+
         power = abs(n)
         ans = 1
         base = x
