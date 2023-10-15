@@ -1,4 +1,8 @@
 class Solution:
+    """
+    https://www.youtube.com/watch?v=XKu_SEDAykw
+    """
+
     def __init__(self, arr: list[int], target: int) -> None:
         self.arr = arr
         self.target = target
@@ -34,7 +38,7 @@ class Solution:
 
 class Solution2:
     # does not work I think cause 2 same element can be considered
-    # wip
+    # if only 2 element == target, this solution cant since this algo can consider >2 for total of target
     def __init__(self, arr: list[int], target: int) -> None:
         self.arr = arr
         self.target = target
@@ -48,7 +52,7 @@ class Solution2:
 
     def _solve_util(self, index: int, prev_total: int) -> int:
         if index == len(self.arr):
-            return prev_total
+            return 0
         current_total = self.arr[index] + prev_total
         if current_total == self.target:
             return current_total
@@ -56,13 +60,19 @@ class Solution2:
             tmp1 = self._solve_util(index + 1, prev_total)
             tmp2 = self._solve_util(index + 1, current_total)
             return max(tmp1, tmp2)
+        else:
+            return 0
 
 
 def main():
-    ans = Solution([1, 2, 3, 9], 8).solve()
-    print(ans)
-    ans = Solution([1, 2, 4, 4], 8).solve()
-    print(ans)
+    ls = [
+        [1, 2, 3, 9],  # False
+        [1, 2, 4, 4],  # True
+        [3, 4, 1, 2],  # False
+    ]
+    for l in ls:
+        ans = Solution2(l, 8).solve()
+        print(ans)
 
 
 if __name__ == "__main__":
