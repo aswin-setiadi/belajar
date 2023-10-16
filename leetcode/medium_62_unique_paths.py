@@ -13,7 +13,7 @@ class Solution:
 
 
 def main():
-    ans = Solution.solve(7, 3)
+    ans = Solution.solve(3, 7)
     print(f"ans={ans} correct ans=28")
 
 
