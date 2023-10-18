@@ -28,7 +28,7 @@ class Solution:
 
 
 if __name__ == "__main__":
-    l = [[2, 7, 11, 15, 9], [3, 2, 4, 6], [3, 3, 6]]
+    l = [[2, 7, 11, 15, 9], [3, 2, 4, 6], [3, 3, 6], [1, 2, 3, 6]]
     for _ in l:
         ans = Solution().twoSumDict(_[:-1], _[-1])
         print(ans)
