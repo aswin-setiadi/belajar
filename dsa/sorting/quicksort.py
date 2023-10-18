@@ -25,7 +25,9 @@ class Solution:
                 j -= 1
 
             if i < j:
+                # element i bigger than j, so swap
                 arr[i], arr[j] = arr[j], arr[i]
+        # i and j cursor pass each other
         if arr[i] > p:
             arr[i], arr[right] = arr[right], arr[i]
 

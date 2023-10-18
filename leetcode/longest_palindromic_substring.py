@@ -9,7 +9,8 @@ class Solution:
             Solution.count += 1
             if len(s) == 1:
                 return s
-            m = len(s) // 2  # if odd return 1 else 0
+            m = len(s) // 2  # floor division
+            # if odd return 1 else 0
             if len(s) % 2:
                 # odd
                 if s[:m] == s[m + 1 :][::-1]:
