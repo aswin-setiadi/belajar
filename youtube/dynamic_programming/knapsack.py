@@ -26,7 +26,7 @@ class Solution:
         if n == len(self.ws) or C == 0:
             result = 0
         elif self.ws[n] > C:
-            result = self.solve_naive(n + 1, C)
+            result = self.solve(n + 1, C)
         else:
             tmp1 = self.solve(n + 1, C)
             tmp2 = self.vs[n] + self.solve(n + 1, C - self.ws[n])
