@@ -1,4 +1,4 @@
-def ArrayChallenge(strArr):
+def ArrayChallenge(strArr: list[str]):
     # code goes here
     # need to find the target nodes
     arr = strArr[0][1:-1].replace(" ", "").split(",")
@@ -8,10 +8,10 @@ def ArrayChallenge(strArr):
         return ans
     t1 = strArr[1]
     t2 = strArr[2]
-    t1parents = []
-    t2parents = []
+    t1parents: list[str] = []
+    t2parents: list[str] = []
 
-    def _rec(i, parents):
+    def _rec(i: int, parents: list[str]):
         if arr[i] == t1:
             t1parents.extend(parents)
         elif arr[i] == t2:

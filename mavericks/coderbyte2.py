@@ -1,11 +1,11 @@
-def StringChallenge(strParam):
+def StringChallenge(strParam: str):
     # code goes here
     # char is either alpha/ num/ space/ symbol
     num_index = None
     # swap, need to handle consecutive number, cause must at least 1 letter/ alphabet
     # must handle 3-4 should not swap
     alpha_exist = False
-    ans = []
+    ans: list[str] = []
     for i, v in enumerate(strParam):
         if v.isalpha():
             # alphabet
