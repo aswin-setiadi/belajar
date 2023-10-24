@@ -12,6 +12,8 @@ def ArrayChallenge(strArr: list[str]):
     t2parents: list[str] = []
 
     def _rec(i: int, parents: list[str]):
+        if arr[i] == "#":
+            return
         if arr[i] == t1:
             t1parents.extend(parents)
         elif arr[i] == t2:
