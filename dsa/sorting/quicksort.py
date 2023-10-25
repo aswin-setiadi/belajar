@@ -5,15 +5,16 @@ class Solution:
     """
     quicksort have pivot normally at last element, steps:
     i from 0, pivot is last element, j from last-1
-    i iterate to right until i<pivot found, then j iterate to left until j >44, if found swap, then i continue again
-    if j passed i, done since left of i are smaller than pivot, swap i with pivot, if i on pivot, nothing to swap
+    i iterate to right until i>pivot found, then j iterate to left until j <44, if found swap item i with j, then i continue again
+    if j position <= i, done since left of i are smaller than pivot, swap i with pivot, if i on pivot, nothing to swap
 
     then recursively sort left and right
 
+    in case i and j start at same index, i can traverse to pivot if item at i < p
     """
 
     @staticmethod
-    def partition(arr, left, right):
+    def partition(arr: list[int], left: int, right: int):
         i = left
         j = right - 1
         p = arr[right]
@@ -34,7 +35,7 @@ class Solution:
         return i
 
     @staticmethod
-    def solve(arr, left, right):
+    def solve(arr: list[int], left: int, right: int):
         if left < right:
             partition_pos = Solution.partition(arr, left, right)
             Solution.solve(arr, left, partition_pos - 1)
