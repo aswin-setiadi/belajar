@@ -19,6 +19,7 @@ class Tree:
     height of tree= leaf with most edges from root, root is 0
     degree of node= total no. of children of that node
     degree of tree= highest degree of a node in that tree
+    order of tree= number of children the tree can have
     """
 
     def __init__(self, node_count: int, adj: list[list[int]]) -> None:
