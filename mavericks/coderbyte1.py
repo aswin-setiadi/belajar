@@ -20,6 +20,7 @@ def ArrayChallenge(strArr: list[str]):
             t1parents.extend(parents)
         elif arr[i] == t2:
             t2parents.extend(parents)
+        # parent is ceil(i/2)-1 if root at 0 or floor(i/2) if root at 1
         left = 2 * i + 1
         right = 2 * i + 2
         if left < len(arr):
