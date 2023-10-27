@@ -12,8 +12,10 @@ def ArrayChallenge(strArr: list[str]):
     t2parents: list[str] = []
 
     def _rec(i: int, parents: list[str]):
+        # submitted answer don't include this check
         if arr[i] == "#":
             return
+
         if arr[i] == t1:
             t1parents.extend(parents)
         elif arr[i] == t2:
@@ -29,16 +31,25 @@ def ArrayChallenge(strArr: list[str]):
     _rec(0, [])
     print(t1parents)
     print(t2parents)
-    # need to catch if 1 of the target is the parent of the other
+
     if t1 in t2parents:
         return t1
     if t2 in t1parents:
         return t2
+    # need to catch if 1 of the target is the parent of the other
+    # shortest+1 will be 1 of the target if the other target is its descendant
     # lca is the index before the parent node diverge
     if len(t1parents) < len(t2parents):
+        if t2parents[len(t1parents)] == t1:
+            return t1
         shortest = len(t1parents)
-    else:
+
+    elif len(t1parents) > len(t2parents):
         shortest = len(t2parents)
+        if t1parents[len(t2parents)] == t2:
+            return t2
+    else:
+        shortest = len(t1parents)
 
     for i in range(shortest):
         if t1parents[i] == t2parents[i]:
