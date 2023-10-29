@@ -20,9 +20,7 @@ class BST:
     def __init__(self, k: int) -> None:
         self.root = Node(k)
 
-    def insert(self, node: Optional[Node], k: int) -> None:
-        if node is None:
-            node = Node(k)
+    def insert(self, node: Node, k: int) -> None:
         if k < node.key:
             if node.left is None:
                 node.left = Node(k, parent=node)
