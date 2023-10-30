@@ -20,6 +20,21 @@ class Tree:
     degree of node= total no. of children of that node
     degree of tree= highest degree of a node in that tree
     order of tree= number of children the tree can have
+
+    Binary tree properties
+    parent is ceil(i/2)-1 if root at 0 or floor(i/2) if root at 1
+    if root at 0:
+        left child= 2*i+1
+        right child= 2*i+2
+    full binary tree= for given height, all nodes are available
+        e.g. height 3-> 7 node, height 4 -> 15
+        2^(height+1)-1 if root height is 0, 2^height-1 if root height is 1
+    complete binary tree= if tree converted to array, no gap in middle
+        but can be less than full for its height
+
+    Heap properties
+    - is a complete binary tree
+    - can have duplicate
     """
 
     def __init__(self, node_count: int, adj: list[list[int]]) -> None:
