@@ -1,6 +1,7 @@
 #!/bin/python3
 # https://www.youtube.com/watch?v=HqPJF2L5h9U
 from collections import deque
+import heapq
 
 
 class Node(object):
@@ -138,5 +139,22 @@ def main1():
     print(mh.root.left)  # AttributeError: 'Node' object has no attribute 'left'
 
 
+def main2():
+    l = [3, 2, 1, 1]
+    heapq.heapify(l)  # inplace, min heap, for max heap, multiply with -1
+    print("Heap: ", l)
+    heapq.heappush(l, 4)
+    print(l)  # 1,1,3,2,4
+    print(heapq.heappop(l))
+    print(l)  # 1,2,3,4
+    print("test heappushpop and heapreplace")
+    v = heapq.heappushpop(l, 0)  # push then pop
+    print(v)
+    print(l)
+    v = heapq.heapreplace(l, 0)  # pop then push
+    print(v)
+    print(l)
+
+
 if __name__ == "__main__":
-    main1()
+    main2()
