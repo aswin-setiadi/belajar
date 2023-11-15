@@ -1,0 +1,7 @@
+leetcode 826 medium most profit assigning work
+https://www.youtube.com/watch?v=zRQgdnCexA8
+leetcode 1235 hard max profit job scheduling
+https://leetcode.com/problems/maximum-profit-in-job-scheduling/description/
+https://www.youtube.com/watch?v=XJp-aOn35y4
+leetcode 679 24 game
+https://www.youtube.com/watch?v=I_Ikfbeop8I
