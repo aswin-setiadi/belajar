@@ -41,9 +41,9 @@ class MaxHeap:
     heapify (O of n according to Abdul Bari) sort the heap so each parent
     is bigger than its descendants
 
-    it first check bottomestest right node and check its descendants
-    if descendant/ descendats are bigger, swap with the biggest, then repeat
-    for the node it swap until cant swap anymore/ at leaf
+    it first check bottomest rightmost node and check its descendants
+    if descendant/ descendants are bigger, swap with the biggest, then repeat
+    for the node it swap downstream until cant swap anymore/ at leaf
     then slowly repeat the check to the left,
     and go to top and left, and so on
 
