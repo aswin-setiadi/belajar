@@ -109,6 +109,15 @@ class MaxHeap:
         print(l)
         return l
 
+    def find_bottom_right_most(self):
+        # TODO
+        ...
+
+    def pop(self):
+        # TODO
+        value = self.root.key
+        # find bottomest rightest node, delete and put value on root
+
 
 def main():
     mh = MaxHeap(0)
@@ -121,5 +130,13 @@ def main():
     mh.traverse_heap()  # [60, 30, 50, 0, 20, 10, 40]
 
 
+def main1():
+    mh = MaxHeap(0)
+    mh.insert(10)
+    print(type(mh.root.left))
+    del mh.root.left
+    print(mh.root.left)  # AttributeError: 'Node' object has no attribute 'left'
+
+
 if __name__ == "__main__":
-    main()
+    main1()
