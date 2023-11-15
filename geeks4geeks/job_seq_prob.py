@@ -1,5 +1,5 @@
-# https://www.geeksforgeeks.org/job-sequencing-problem/
-
+# https://www.geeksforgeeks.org/job-sequencing-problem/ greedy algorithm with: always loop each possible day for a job / use heap to find max profit for given day
+# https://www.geeksforgeeks.org/job-sequencing-problem-using-disjoint-set/ use disjoint set? # TODO read first
 # function to schedule the jobs take 2
 # arguments array and no of jobs to schedule
 
