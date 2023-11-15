@@ -1,5 +1,7 @@
 #!/bin/python3
 # https://www.youtube.com/watch?v=HqPJF2L5h9U
+# heap implementation
+# https://www.geeksforgeeks.org/min-heap-in-python/
 from collections import deque
 import heapq
 
