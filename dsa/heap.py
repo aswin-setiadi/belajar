@@ -154,6 +154,16 @@ def main2():
     v = heapq.heapreplace(l, 0)  # pop then push
     print(v)
     print(l)
+    print("test heappush, it will maintain order")
+    l = [9, 8, 7, 6]
+    heapq.heapify(l)
+    print(l)
+    heapq.heappush(l, 3)
+    print(l)
+    heapq.heappush(l, 2)
+    print(l)
+    heapq.heappush(l, 1)
+    print(l)
 
 
 if __name__ == "__main__":
