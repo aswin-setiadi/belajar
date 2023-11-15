@@ -1,5 +1,6 @@
 from collections import deque
 from functools import reduce
+import string
 from typing import Any
 
 
@@ -19,19 +20,21 @@ def main():
     print(reduce(lambda x, y: x + y, fruits))
 
 
-q: deque[Any] = deque([1, 2, 3, 4], 3)
-q.append("a")
-q.append("b")
-q.append("c")
-q.append("d")
-print(q)
-q.appendleft("a")
-print(q)
-q.pop()
-q.popleft()
-print(len(q))
-if q:
-    print("q not empty")
+def main_queue():
+    q: deque[Any] = deque([1, 2, 3, 4], 3)
+    q.append("a")
+    q.append("b")
+    q.append("c")
+    q.append("d")
+    print(q)
+    q.appendleft("a")
+    print(q)
+    q.pop()
+    q.popleft()
+    print(len(q))
+    if q:
+        print("q not empty")
+
 
 # for stack can use list append and pop, deque is faster than list cause:
 # when python need to reallocate memory to grow underlying list, the operation are slower and can become O(n)
@@ -92,8 +95,107 @@ def main_set():
     # so you will have set of frozenset
 
 
-# tuple is non-unique ordered and element is unchangeable and can't add/ remove
-# (4) is int, (4,) is tuple
+def main_tuple():
+    # tuple is non-unique ordered and element is unchangeable and can't add/ remove
+    # (4) is int, (4,) and 4, is tuple
+    # tuple is lightweight, indexable, immutable, heterogeneous (can store multiple obj type),
+    # iterable, sliceable, combinable (concat), hashable
+    # unpacking var must match iterable (tuple in this case) length
+    # since 3.5 unpacking works for iterable objs not just tuple
+    # tuple has index and count method to check index and count of an obj in it
+    # when using "in" e.g. "Monday" in days, it is O(n)
+    # so better use set since it is implemented as hash table
+    # builtin reversed and sorted will return new obj
+
+    first, last = ["Aswin", "Setiadi"]
+
+    name, age, height, country = ("Jane Doe", 25, 1.75, "Canada")
+    days = (
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday",
+    )
+    empty = ()
+    no_brackets = 1, 2, 3
+    t = tuple([True, 1, ["a", "b"]])
+    t[2].append("c")
+    first, *middles, last = (1, 2, 3, 4, 5)  # middles will be list
+    name = ("Aswin", "Setiadi")
+    contact = ("aswin.setiadi@gmail.com", 12345678)
+    aswin = (*name, *contact)
+    quotient, remainder = divmod(7, 2)
+    t1 = (1,)
+    t2 = t1[:]  # same as copy(t1) copy is from copy import copy
+    is_same = id(t1) == id(t2)  # True
+
+    info1 = ("Aswin", 31)
+    info2 = ("Computer Science", ("Python", "Flask"))
+    info3 = ("12345678",)
+    info4 = info1 + info2 + info3  # can only concat. tuple with tuple
+    num = (1, 2, 3)
+    num_twice = num * 2  # 1,2,3,1,2,3
+
+    fruits = (("apple", 0.4), ("banana", 0.25), ("orange", 0.35))
+    sorted_by_price_fruits = sorted(fruits, key=lambda fruit: fruit[1])
+
+    monthly_incomes = (
+        ("January", 5000),
+        ("February", 5500),
+        ("March", 6000),
+        ("April", 5800),
+        ("May", 6200),
+        ("June", 7000),
+        ("July", 7500),
+        ("August", 7300),
+        ("September", 6800),
+        ("October", 6500),
+        ("November", 6000),
+        ("December", 5500),
+    )
+    quarter_income = 0
+    for i, (month, income) in enumerate(monthly_incomes, start=1):
+        print(f"{month:>10}: {income}")
+        quarter_income += income
+        if i % 3 == 0:
+            print("-" * 20)
+            print(f"{'Quarter':>10}: {quarter_income}", end="\n\n")
+            quarter_income = 0
+
+    numbers = "2", "3", "1"
+    tuple_int = tuple(int(number) for number in numbers)
+    print(tuple_int)
+
+
+def main_list():
+    # list method reverse and sort apply in place
+    # list elements are more for homogenous use
+    l = [1, 2, 3]
+    l.insert(1, 1.5)  # 1,1.5,2,3
+    ll = sorted(l, reverse=True)  # sort in descending
+
+
+def lambda_tutorial():
+    result = (lambda x, y: x + y)(10, 20)
+    print(result)
+    l = [1, 2, 3, 4, 5]
+    nl = list(map(lambda x, y: x + y, l, l))
+    print(nl)
+
+
+def thousand_seperator():
+    x = string.ascii_uppercase * int(1e3)  # repeat A-Z 1e3 times
+    thousand = 1000
+    print(f"{thousand:,}")
+
+
 # dict is ordered (as of 3.7) and changeable
 # deque append and popleft= queue
 # deque append and pop= stack
+
+if __name__ == "__main__":
+    # lambda_tutorial()
+    main_tuple()
