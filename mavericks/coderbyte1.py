@@ -1,3 +1,6 @@
+from collections import deque
+
+
 def ArrayChallenge(strArr: list[str]):
     # code goes here
     # need to find the target nodes
@@ -30,8 +33,8 @@ def ArrayChallenge(strArr: list[str]):
 
     # traverse array
     _rec(0, [])
-    print(t1parents)
-    print(t2parents)
+    # print(t1parents)
+    # print(t2parents)
 
     if t1 in t2parents:
         return t1
@@ -60,6 +63,27 @@ def ArrayChallenge(strArr: list[str]):
     return ans
 
 
+def print_tree(arr: list[str]):
+    q: deque[str] = deque(arr[:1])
+    level_width = 1
+    printed = 0
+    while q:
+        tmp: list[str] = []
+        for _ in range(level_width):
+            tmp.append(q.popleft())
+        print(tmp)
+        printed += len(tmp)
+        level_width *= 2
+        for i, item in enumerate(arr[printed : printed + level_width]):
+            if i < len(arr):
+                q.append(item)
+
+
+def clean_arr(s: str) -> list[str]:
+    _ = s[1:-1].replace(" ", "").split(",")
+    return _
+
+
 if __name__ == "__main__":
     arr = ["[12, 5, 9, 6, 2, 0, 8, #, #, 7, 4, #, #, #, #]", "6", "4"]
     ans = ArrayChallenge(arr)
@@ -71,5 +95,6 @@ if __name__ == "__main__":
     ans = ArrayChallenge(arr)
     print(ans)  # 5
     arr = ["[5, 2, 6, 1, #, 8, 12, #, #, #, #, #, #, 3, #]", "3", "12"]
+    print_tree(clean_arr(arr[0]))
     ans = ArrayChallenge(arr)
     print(ans)  # 12
