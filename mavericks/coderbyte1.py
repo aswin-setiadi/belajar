@@ -84,6 +84,15 @@ def clean_arr(s: str) -> list[str]:
     return _
 
 
+def get_lowest_common_parent(arr: list[str]):
+    # TODO
+    # find index of number ( O(n) ) ujung2nya sama aja
+    # lower node find ancestors until same level as the other
+    # if they are different go 1 lvl up and check
+    # repeat until meet
+    ...
+
+
 if __name__ == "__main__":
     arr = ["[12, 5, 9, 6, 2, 0, 8, #, #, 7, 4, #, #, #, #]", "6", "4"]
     ans = ArrayChallenge(arr)
