@@ -55,9 +55,6 @@ class Solution2:
 
     @staticmethod
     def solve(arr: list[list[int]], target_cell: tuple[int, int]) -> int:
-        m = len(arr)
-        n = len(arr[0])
-
         def _rec_util(row: int, col: int, cost: int) -> int:
             cur_cost: int = arr[row][col] + cost
             # only possible left or top
@@ -73,7 +70,7 @@ class Solution2:
                 fromleft = sys.maxsize
             return min(fromtop, fromleft)
 
-        return _rec_util(m - 1, n - 1, 0)
+        return _rec_util(target_cell[0], target_cell[1], 0)
 
 
 def main1():
