@@ -1,0 +1,30 @@
+web app:
+    rsp.com/
+        -> login  HTTPDS GET
+            salt= clientappfn2(email) #flawed
+            saltedpw= clientappfun(pw,salt)
+            request body: email, encrypted(saltedpw) with key from backend
+            response:
+                user game history: acceptable choices, last session state of game, etc.
+
+    ->
+        last session ? ask to continue : go to main menu
+
+    ->
+        1. pvp, 2. pvpc, 3. determine acceptable choices
+    
+    -> 1.
+        # pvp:
+        # backend only need to keep track of game session
+            - how many p1 wins
+            - how many p2 wins
+            - how many draw
+
+        # pvc:
+        # backend only need to keep track of game session
+            - how many p1 wins
+            - how many p2 wins
+            - how many draw
+
+        a sessions= an outcome has reached (w/l/d)
+        client call api to store session result        
