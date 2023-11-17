@@ -18,7 +18,7 @@ class Solution:
 
 def main():
     ans = Solution([6, 2, 5], 11).solve()
-    print(f"ans={ans} real ans=3")
+    print(f"ans={ans} real ans=2")
 
 
 if __name__ == "__main__":
