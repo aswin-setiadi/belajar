@@ -49,12 +49,13 @@ class Solution1:
 
 
 class Solution2:
-    """
-    Find shortest path to target cell brute force (check all possible set of path)
-    """
-
     @staticmethod
     def solve(arr: list[list[int]], target_cell: tuple[int, int]) -> int:
+        """
+        Find shortest path (with weight) to target cell, brute force (check all possible set of path)
+        This is bottom up approach cause start from end cell
+        """
+
         def _rec_util(row: int, col: int, cost: int) -> int:
             cur_cost: int = arr[row][col] + cost
             # only possible left or top
@@ -73,6 +74,28 @@ class Solution2:
         return _rec_util(target_cell[0], target_cell[1], 0)
 
 
+class Solution3:
+    """
+    still brute force finding shortest path (with weight) top down approach
+    """
+
+    def __init__(self, matrix: list[list[int]], target_cell: tuple[int, int]) -> None:
+        self.matrix = matrix
+        self.target_cell = target_cell
+        self.maxrowindex = len(matrix) - 1
+        self.maxcolindex = len(matrix[0]) - 1
+        self.ans = [[[-1] for _ in range(len(matrix))] for _ in range(len(matrix[0]))]
+        self.smallest_cost = sys.maxsize
+
+    def solve(self, row: int, col: int, cost: int):
+        if row == self.target_cell[0] and col == self.target_cell[1]:
+            self.smallest_cost = min(self.smallest_cost, cost + self.matrix[row][col])
+        if row < self.maxrowindex:
+            self.solve(row + 1, col, cost + self.matrix[row][col])
+        if col < self.maxcolindex:
+            self.solve(row, col + 1, cost + self.matrix[row][col])
+
+
 def main1():
     ans = Solution1.solve_rec(3, 3, (2, 2))
     print(ans)
@@ -81,9 +104,14 @@ def main1():
 
 
 def main2():
-    matrix: list[list[int]] = [[4, 9, 7], [3, 8, 5], [1, 2, 6]]
-    ans = Solution2.solve(matrix, (2, 2))
-    print(ans)
+    matrix: list[list[int]] = [[4, 9, 7, 2], [3, 8, 5, 2], [1, 2, 6, 4], [4, 3, 2, 2]]
+    for row in matrix:
+        print(row)
+    ans2 = Solution2.solve(matrix, (3, 3))
+    print(ans2)
+    ans3 = Solution3(matrix, (3, 3))
+    ans3.solve(0, 0, 0)
+    print(ans3.smallest_cost)
 
 
 if __name__ == "__main__":
