@@ -1,11 +1,15 @@
 from enum import IntEnum
 import random
 
+# https://realpython.com/python-rock-paper-scissors/
+
 
 class Action(IntEnum):
     Rock = 0
     Paper = 1
     Scissors = 2
+    Spock = 3
+    Lizard = 4
 
 
 def get_user_selection():
@@ -23,24 +27,22 @@ def get_comp_selection():
     return action
 
 
-def determine_winner(user: int, comp: int):
+def determine_winner(user: Action, comp: Action):
+    print(f"user={user.name} comp={comp.name}")
+    victories = {
+        Action.Rock: [Action.Scissors, Action.Lizard],
+        Action.Paper: [Action.Rock, Action.Spock],
+        Action.Scissors: [Action.Paper, Action.Lizard],
+        Action.Spock: [Action.Scissors, Action.Rock],
+        Action.Lizard: [Action.Spock, Action.Paper],
+    }
+    defeats = victories[user]
     if user == comp:
         print("tie")
-    elif user == Action.Rock:
-        if comp == Action.Scissors:
-            print("user win")
-        else:
-            print("user lose")
-    elif user == Action.Scissors:
-        if comp == Action.Paper:
-            print("user win")
-        else:
-            print("user lose")
-    elif user == Action.Paper:
-        if comp == Action.Rock:
-            print("user win")
-        else:
-            print("user lose")
+    elif comp in defeats:
+        print("user win")
+    else:
+        print("user lose")
 
 
 def main():
