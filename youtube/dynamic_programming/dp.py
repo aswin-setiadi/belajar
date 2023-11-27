@@ -53,7 +53,9 @@ class Solution2:
     def solve(arr: list[list[int]], target_cell: tuple[int, int]) -> int:
         """
         Find shortest path (with weight) to target cell, brute force (check all possible set of path)
+        There is weight, so can't use memoization cause it will need to compare all possible weight set
         This is bottom up approach cause start from end cell
+
         """
 
         def _rec_util(row: int, col: int, cost: int) -> int:
@@ -96,6 +98,27 @@ class Solution3:
             self.solve(row, col + 1, cost + self.matrix[row][col])
 
 
+class Knapsack:
+    """colin galen extra problem 2 knapsack"""
+
+    @staticmethod
+    def solve(arr: list[int], total: int):
+        last = len(arr) - 1
+
+        def _rec(index: int, total_left: int) -> bool:
+            if arr[index] == total_left:
+                return True
+            if index == last:
+                return False
+            else:
+                if arr[index] > total_left:
+                    return _rec(index + 1, total_left)
+                else:
+                    return _rec(index + 1, total_left - arr[index])
+
+        return _rec(0, total)
+
+
 def main1():
     ans = Solution1.solve_rec(3, 3, (2, 2))
     print(ans)
@@ -114,6 +137,19 @@ def main2():
     print(ans3.smallest_cost)
 
 
+def main3():
+    arr = [3, 5, 2, 7, 9]
+    t = 10
+    print(Knapsack.solve(arr, t))  # True
+    arr = [2, 4, 6]
+    t = 11
+    print(Knapsack.solve(arr, t))  # False
+    arr = [2, 7, 3, 4, 9, 5, 6, 1, 8]
+    t = 25
+    print(Knapsack.solve(arr, t))  # True
+
+
 if __name__ == "__main__":
     # main1()
-    main2()
+    # main2()
+    main3()
