@@ -1,5 +1,6 @@
 #!/bin/python3
 # https://www.youtube.com/watch?v=Clp5c7HvLqs
+import copy
 import sys
 
 
@@ -119,6 +120,62 @@ class Knapsack:
         return _rec(0, total)
 
 
+class Paths:
+    @staticmethod
+    def solve(rc: int, cc: int, end: tuple[int, int]) -> int:
+        total_paths = 0
+        traversed = [[False] * cc for _ in range(rc)]
+
+        def rec(
+            row: int,
+            col: int,
+            traversed: list[list[bool]],
+            prev_path: list[tuple[int, int]],
+        ):
+            nonlocal total_paths, end
+            prev_path.append((row, col))
+            if row == end[0] and col == end[1]:
+                print(prev_path)
+                total_paths += 1
+            else:
+                traversed[row][col] = True
+                if row < rc - 1:
+                    if not traversed[row + 1][col]:
+                        rec(
+                            row + 1,
+                            col,
+                            copy.deepcopy(traversed),
+                            copy.deepcopy(prev_path),
+                        )
+                if col < cc - 1:
+                    if not traversed[row][col + 1]:
+                        rec(
+                            row,
+                            col + 1,
+                            copy.deepcopy(traversed),
+                            copy.deepcopy(prev_path),
+                        )
+                if row > 0:
+                    if not traversed[row - 1][col]:
+                        rec(
+                            row - 1,
+                            col,
+                            copy.deepcopy(traversed),
+                            copy.deepcopy(prev_path),
+                        )
+                if col > 0:
+                    if not traversed[row][col - 1]:
+                        rec(
+                            row,
+                            col - 1,
+                            copy.deepcopy(traversed),
+                            copy.deepcopy(prev_path),
+                        )
+
+        rec(0, 0, traversed, [])
+        return total_paths
+
+
 def main1():
     ans = Solution1.solve_rec(3, 3, (2, 2))
     print(ans)
@@ -149,7 +206,14 @@ def main3():
     print(Knapsack.solve(arr, t))  # True
 
 
+def main4():
+    # Extra Problem 3 min. 22:35
+    ans = Paths.solve(3, 3, (2, 2))
+    print(ans)
+
+
 if __name__ == "__main__":
     # main1()
     # main2()
-    main3()
+    # main3()
+    main4()
