@@ -2,7 +2,7 @@ from dataclasses import dataclass, field
 
 
 class EmployeeVanilla:
-    def __init__(self, name, emp_id, age, city) -> None:
+    def __init__(self, name: str, emp_id: str, age: int, city: str) -> None:
         self.name = name
         self.emp_id = emp_id
         self.age = age
@@ -30,7 +30,7 @@ class Employee:
     item_count: int = field(default=2)
     city: str = field(default="Earth")
     # init= False will raise error if we supply arg/ kwarg when instantiating Employee
-    items: list = field(default_factory=list, init=False)
+    items: list[None] = field(default_factory=list, init=False)
 
     def __post_init__(self):
         self.items = [None for _ in range(self.item_count)]
@@ -42,8 +42,8 @@ def test_employeevanilla():
     emp3 = EmployeeVanilla("Aswin", "1", 31, "Jakarta")
 
     print(emp1)
-    print("emp1 == emp2? ", emp1 == emp2)
-    print("emp1 == emp3? ", emp1 == emp3)
+    print("emp1 == emp2? ", emp1 == emp2)  # False
+    print("emp1 == emp3? ", emp1 == emp3)  # True
 
 
 def test_employee():
@@ -55,8 +55,8 @@ def test_employee():
 
     print(emp1)
     print(emp4)
-    print("emp1 == emp2? ", emp1 == emp2)
-    print("emp1 == emp3? ", emp1 == emp3)
+    print("emp1 == emp2? ", emp1 == emp2)  # False
+    print("emp1 == emp3? ", emp1 == emp3)  # True
 
 
 if __name__ == "__main__":
