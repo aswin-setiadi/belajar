@@ -20,6 +20,7 @@ def main():
     print(Color.RED.value)  # 1 int
     print(list(reversed(Color)))  # [Color.GREEN, Color.Red]
     print(len(Shape))
+    print(Shape(3))  # ValueError
 
 
 if __name__ == "__main__":
