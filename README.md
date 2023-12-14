@@ -26,3 +26,9 @@ https://medium.com/analytics-vidhya/essential-developer-tools-for-improving-your
 ## Useful links
 
 https://jellis18.github.io/post/2022-01-11-abc-vs-protocol/
+
+https://www.pythontutorial.net/python-oop/python-protocol/
+
+https://docs.python.org/3/library/typing.html#typing.overload
+
+* For defining arg/ return type combinations
