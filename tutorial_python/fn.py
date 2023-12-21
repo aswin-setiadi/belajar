@@ -36,7 +36,7 @@ def main2():
     print(min(ans)) # get fastest timing
 
 def main3():
-    # monads https://www.youtube.com/watch?v=Q0aVbqim5pE TODO watch finish
+    # monads https://www.youtube.com/watch?v=Q0aVbqim5pE
 
     class Functor:
         def __init__(self, value: int) -> None:
