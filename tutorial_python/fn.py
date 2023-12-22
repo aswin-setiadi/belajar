@@ -278,8 +278,26 @@ def main5():
     print("main5 ends")
 
 
-
-
+def main6(choice:int):
+    even=[0,2,4,6,8]
+    odd=[1,3,5,7,9]
+    # match choice:
+    #     # this is structural pattern matching so must put a pattern like literal int, literal dict, etc.
+    #     case 1:
+    #         if choice in even:
+    #             print("even")
+    #         elif choice in odd:
+    #             print("odd")
+    #         else:
+    #             raise ValueError
+    #     case _:
+    #         print("any")
+    if choice in even:
+        print("even")
+    elif choice in odd:
+        print("odd")
+    else:
+        raise ValueError
 
 if __name__ == "__main__":
     main1()
