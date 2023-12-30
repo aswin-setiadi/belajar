@@ -34,6 +34,9 @@ def main():
     print(type(Color(1)))  # Color
     print(type(Color.RED))  # Color
     print(Shape.RECTANGLE)  # 2
+    print(
+        Shape.RECTANGLE.name
+    )  # SQUARE cause same value as RECTANGLE and declared first than it
     print(Color.GREEN)
     print(Color.BLUE)  # Color.GREEN, blue will be alias of green (green declared first)
     print(EnumDict.First)  # EnumDict.First
@@ -47,5 +50,23 @@ def main():
     print(EnumDict.First is EnumDict.Thousand)  # False
 
 
+def main2():
+    for item in Shape:
+        print(item)  # 1 2
+    for item in Color:
+        print(item)  # red, green
+    l = list(Shape)
+    print(l)  # [<Shape.CIRCLE: 1>, <Shape.SQUARE: 2>]
+    l = list(Color)
+    print(l)  # [<Color.RED: 1>, <Color.GREEN: 2>]
+    d: dict[Color, int] = dict((x, 0) for x in Color)
+    print(d)
+    dd = {Color.BLUE: 1}
+    for k, v in dd.items():
+        d[k] = v
+    print(d)
+
+
 if __name__ == "__main__":
     main()
+    # main2()
