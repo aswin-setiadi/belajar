@@ -1,0 +1,8 @@
+# docker image-> docker file (based on public python3 slim image, installed with necessary numpy c library)
+
+func name
+  trigger type
+  cold_start count
+  iam declaration
+
+  
