@@ -54,7 +54,7 @@ def main2():
     for item in Shape:
         print(item)  # 1 2
     for item in Color:
-        print(item)  # red, green
+        print(item)  # Color.RED, Color.GREEN
     l = list(Shape)
     print(l)  # [<Shape.CIRCLE: 1>, <Shape.SQUARE: 2>]
     l = list(Color)
@@ -68,5 +68,5 @@ def main2():
 
 
 if __name__ == "__main__":
-    main()
-    # main2()
+    # main()
+    main2()
