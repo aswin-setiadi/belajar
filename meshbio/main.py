@@ -1,6 +1,7 @@
 # write a function takes input 2 int n and m
 # this function return a matrix of nxm
 # matrix should be filled up with zero
+from copy import deepcopy
 
 
 def main(n: int, m: int):
@@ -35,6 +36,19 @@ def main3(n: int, m: int):
     return _rec_row(matrix)
 
 
+# generate multidimension list with default 0 value
+# if not wrong during interview can't use deepcopy
+def main4(dims: list[int]):
+    def _rec(subdims: list[int]):
+        if len(subdims) == 1:
+            return [0 for _ in range(subdims[0])]
+        else:
+            tmp = _rec(subdims[1:])
+            return [deepcopy(tmp) for _ in range(subdims[0])]
+
+    return _rec(dims)
+
+
 # # turn the function into recursive
 # def main3(n: int, m: int):
 #     matrix = []
@@ -65,4 +79,9 @@ if __name__ == "__main__":
 
     print("recursive solution (done after interview):")
     matrix = main3(3, 4)
+    print(matrix)
+
+    matrix = main4([2, 3, 4])
+    print(matrix)
+    matrix[0][0][0] = 1
     print(matrix)
