@@ -67,6 +67,15 @@ def main2():
     print(d)
 
 
+def main3():
+    colors = [Color.RED, Color.GREEN]
+    print(type(colors[0]))  # <enum 'Color'>
+    for c in Color:
+        print(c)  # Color.RED
+        print(type(c))  # <enum 'Color'>
+
+
 if __name__ == "__main__":
     # main()
-    main2()
+    # main2()
+    main3()
