@@ -26,3 +26,4 @@ share/python-wheels/
 MANIFEST
 
 .coverage
+.venv/
