@@ -22,7 +22,7 @@ def symmetrical_seperation(points: tuple[tuple[int, int]]):
         minValue=min(t[0], minValue)
     if maxValue==minValue:
         return maxValue
-    midDistance=((abs(maxValue)+abs(minValue))/2)
+    midDistance= (maxValue-minValue)/2
     if midDistance%1!=0:
         return False
     else:
@@ -58,6 +58,8 @@ def main2():
     print(symmetrical_seperation(((0,0), (0,1))))
     print(symmetrical_seperation(((-2,0), (0,0))))
     print(symmetrical_seperation(((-2,4), (-1,2), (2,4), (1,2))))
+    print(symmetrical_seperation(((-2,4), (-1,2), (2,4), (1,2), (3,3)))) # False
+    print(symmetrical_seperation(((-2,4), (-1,2), (2,4), (1,2), (3,3), (-3,4), (-3,3), (3,4))))
 
 if __name__=="__main__":
     main1()
