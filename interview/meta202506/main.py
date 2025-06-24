@@ -22,14 +22,43 @@ def symmetrical_seperation(points: tuple[tuple[int, int]]):
         minValue=min(t[0], minValue)
     if maxValue==minValue:
         return maxValue
-    midValue=((abs(maxValue)+abs(minValue))/2)
-    if midValue%2!=0:
+    midDistance=((abs(maxValue)+abs(minValue))/2)
+    if midDistance%1!=0:
         return False
     else:
-        midLocation=minValue+midValue
+        midLocation=minValue+midDistance
+        seen=[]
         for k in sorted(d):
-            if k<midLocation and k<midValue
-            
+            if k in seen:
+                continue
             else:
-                return False
+                if k<midLocation:
+                    k_mirror=midLocation+(midLocation-k)
+                    if k_mirror in d:
+                        if len(d[k])!=len(d[k_mirror]):
+                            return False
+                        else:
+                            if set(d[k])!=set(d[k_mirror]):
+                                return False
+                            else:
+                                seen.append(k_mirror)
+                    else:
+                        return False
+                else:
+                    return False
+        return midLocation
 
+def main1():
+    print(shorten_word(""))
+    print(shorten_word("a"))
+    print(shorten_word("ab"))
+    print(shorten_word("abc"))
+
+def main2():
+    print(symmetrical_seperation(((0,0), (0,1))))
+    print(symmetrical_seperation(((-2,0), (0,0))))
+    print(symmetrical_seperation(((-2,4), (-1,2), (2,4), (1,2))))
+
+if __name__=="__main__":
+    main1()
+    main2()
