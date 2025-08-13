@@ -13,7 +13,7 @@ class Solution:
         test_count=int(input())
         cls.TESTS=[]
         for i in range(test_count):
-            _=input()
+            _=input().split()
             _= [int(x)-1 for x in _]
             cls.TESTS.append([(_[0],_[1]),(_[2],_[3])])
         for t in cls.TESTS:
