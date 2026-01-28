@@ -50,9 +50,27 @@ def main2b(ls):
             res[ls[i][0]]+=(ls[i][1]-ls[i-1][1])
     return res
 
+def main2c(l):
+    res={}
+    prev=l[0]
+    res[prev[0]]=0
+    for x in l[1:]:
+        t= x[1]-prev[1]
+        if x[2]=="b":
+            if x[0] not in res:
+                res[x[0]]=0
+            if prev[2]=="b":
+                res[prev[0]]+=t
+            # else:
+            #     res[x[0]]+=t
+        else:
+            res[x[0]]+=t
+        prev=x
+    return res
+
 if __name__=="__main__":
     print(main1([100,20,10,50,10,40,90,90]))
-    print(main2b([
+    print(main2c([
         ["foo",10,"b"],
         ["foo",20,"e"],
         ["foo",25,"b"],
